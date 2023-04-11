@@ -16,12 +16,33 @@
     </header>
 
     <main class="content">
-      <section class="profile"></section>
-      <section class="elements"></section>
+      <section class="profile">
+        <!-- я специально использую изображения не из макета для проверки работы блока аватара -->
+        <img src="images/examples/ava.jpg" alt="аватар" class="profile__avatar">
+        <div class="profile__info">
+          <h1 class="profile__name">Alexander Alexander <img src="images/buttons/edit-button.svg" alt="редактировать" class="profile__edit-button"></h1>
+          <!-- <h1 class="profile__wrap">4
+            <img src="images/buttons/edit-button.svg" alt="редактировать" class="profile__edit-button">
+          </h1> -->
+          <img src="images/buttons/edit-button.svg" alt="редактировать" class="profile__edit-button">
+          <p class="profile__description">junior junior junior junior junior junior junior</p>
+        </div>
+        <div class="profile__add-button"></div>
+        <!-- <img src="images/buttons/add-button.svg" alt="добавить" class="profile__add-button"> -->
+      </section>
+
+      <section class="elements">
+        <div class="element">
+          <img src="images/examples/building.jpg" alt="" class="element__picture">
+          <h2 class="element__title">Гора Эльбрус</h2>
+          <img src="images/glyph/like.svg" alt="сердечко" class="element__like-button">
+        </div>
+
+      </section>
     </main>
 
     <footer class="footer">
-
+      <p class="footer__copyright">© 2023 Mesto Russia</p>
     </footer>
     <!-- <div class="helper"></div> -->
 

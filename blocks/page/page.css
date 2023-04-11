@@ -1,7 +1,6 @@
 .page {
   padding: 0 200px;
 
-  /* чисто на всяк пожарный дал флекс*/
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -11,6 +10,12 @@
   background-color: black;
 
   font-family: "Inter", "Arial", sans-serif;
+}
+
+@media (max-width: 1023px) {
+  .page {
+    padding: 0 110px;
+  }
 }
 
 @media (max-width: 767px) {

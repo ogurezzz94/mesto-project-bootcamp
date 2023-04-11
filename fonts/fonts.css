@@ -1,26 +1,42 @@
 @font-face {
-  font-family: 'Inter';
-  font-style:  normal;
+  font-family: "Inter";
+  font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: url("inter/Inter-Regular.woff2") format("woff2"),
-       url("inter/Inter-Regular.woff") format("woff");
+    url("inter/Inter-Regular.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Inter';
-  font-style:  normal;
+  font-family: "Inter";
+  font-style: normal;
   font-weight: 500;
   font-display: swap;
   src: url("inter/Inter-Medium.woff2") format("woff2"),
-       url("inter/Inter-Medium.woff") format("woff");
+    url("inter/Inter-Medium.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'Inter';
-  font-style:  normal;
+  font-family: "Inter";
+  font-style: normal;
   font-weight: 900;
   font-display: swap;
   src: url("inter/Inter-Black.woff2") format("woff2"),
-       url("inter/Inter-Black.woff") format("woff");
+    url("inter/Inter-Black.woff") format("woff");
+}
+
+@font-face {
+  font-family: "glyphs";
+  src: url("glyphs/glyphs.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("glyphs/Inter-ExtraLight.woff2") format("woff2"),
+    url("glyphs/Inter-ExtraLight.woff") format("woff");
 }
