@@ -1,6 +1,6 @@
 .element {
   width: 100%;
-  background-color: white;
+  background-color: #ffffff;
   padding: 0 0 31px;
 
   display: grid;
@@ -16,41 +16,4 @@
   /* ну и костыль конечно */
   border-radius: 15px 15px 10px 10px;
   /* overflow: hidden; */
-}
-
-.element__picture {
-  grid-area: pic;
-  width: 100%;
-
-  border-radius: 10px 10px 0 0;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-}
-
-.element__title {
-  margin: 0;
-  padding-left: 21px;
-
-  font-family: "Inter", "Arial", sans-serif;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 24px;
-  line-height: 29px;
-
-  color: #000000;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.element__like-button {
-  padding: 0 20px;
-  justify-self: flex-end;
-  transition: opacity 0.2s;
-}
-
-.element__like-button:hover {
-  cursor: pointer;
-  opacity: 0.5;
 }

@@ -16,33 +16,3 @@
     padding: 28px 0 42px;
   }
 }
-
-.header__line {
-  width: 100%;
-  opacity: 0.7;
-  border-bottom: 1px solid #545454;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  /* height: 10px;
-  background-color: red; */
-}
-
-@media (max-width: 767px) {
-  .header__line {
-    box-shadow: none;
-  }
-}
-
-.header__logo {
-  width: 142px;
-  height: 33px;
-}
-
-@media (max-width: 767px) {
-  .header__logo {
-    width: 103.74px;
-    height: 24.4px;
-
-    padding-left: 27px;
-  }
-}

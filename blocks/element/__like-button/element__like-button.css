@@ -1,0 +1,20 @@
+.element__like-button {
+  width: 22px;
+  height: 19px;
+  margin: 0 20px;
+
+  justify-self: flex-end;
+
+  border: none;
+  background-color: transparent;
+  background-image: url(../../../images/glyph/like.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  transition: opacity 0.2s;
+}
+
+.element__like-button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}

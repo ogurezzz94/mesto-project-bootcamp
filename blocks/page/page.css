@@ -1,5 +1,5 @@
 .page {
-  padding: 0 200px;
+  /* padding: 0 200px; */
 
   display: flex;
   flex-direction: column;
@@ -7,7 +7,7 @@
   justify-content: center;
   align-items: center;
 
-  background-color: black;
+  background-color: #000000;
 
   font-family: "Inter", "Arial", sans-serif;
 }
