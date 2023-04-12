@@ -1,0 +1,166 @@
+.popup {
+  background-color: rgba(0, 0, 0, 0.5);
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: none;
+  grid-auto-rows: 1fr;
+  grid-template-columns: minmax(19px, 1fr) minmax(auto, 430px) minmax(19px, 1fr);
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    ". . cross"
+    ". input ."
+    ". . .";
+}
+
+@media (max-width: 767px) {
+  .popup {
+    grid-template-areas:
+      ". cross ."
+      ". input ."
+      ". . .";
+  }
+}
+
+.popup__opened {
+  display: grid;
+}
+
+.popup__close-button {
+  margin: 0 0 8px 8px;
+  grid-area: cross;
+  justify-self: start;
+  align-self: flex-end;
+
+  width: 32px;
+  height: 32px;
+  background-image: url(../../images/glyph/cross.svg);
+  background-color: rgba(0, 0, 0, 0);
+  background-size: 100%;
+  border: 0;
+  transition: 0.2s;
+}
+
+@media (max-width: 767px) {
+  .popup__close-button {
+    margin: 0 0 16px;
+    width: 20px;
+    height: 20px;
+    justify-self: flex-end;
+  }
+}
+
+.popup__close-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.popup__container {
+  grid-area: input;
+
+  /* max-width: 430px; */
+  /* height: 330px; */
+  padding: 35px 36px 37px;
+
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+
+  background: #ffffff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+  .popup__container {
+    padding: 25px 22px;
+    /* max-width: 282px; */
+    /* height: 322px; */
+  }
+}
+
+.popup__title {
+  margin: 0;
+  padding: 0 0 54px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+
+  color: #000000;
+}
+
+@media (max-width: 767px) {
+  .popup__title {
+    padding: 0 0 74px;
+    font-size: 18px;
+    line-height: 22px;
+    align-self: center;
+  }
+}
+
+.popup__field {
+  box-sizing: border-box;
+  padding: 0 0 13px;
+  min-height: 27px;
+
+  border: 0;
+  border-bottom: solid black 1px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+
+  color: #000000;
+}
+
+.popup__field:focus {
+  outline: 0;
+  border-bottom: 1px solid black;
+}
+
+.popup__field_name {
+  margin: 0 0 30px;
+}
+
+.popup__submit-button {
+  /* max-width: 358px; */
+  min-height: 50px;
+  margin: 48px 0 0;
+
+  border: 0;
+  border-radius: 2px;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+
+  color: #ffffff;
+  background-color: #000000;
+  transition: opacity 0.2s;
+}
+
+@media (max-width: 767px) {
+  .popup__submit-button {
+    min-height: 46px;
+    margin: 45px 0 0;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+.popup__submit-button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}

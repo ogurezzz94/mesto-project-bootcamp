@@ -10,6 +10,7 @@
 </head>
 <body>
   <div class="page">
+
     <header class="header">
       <img src="images/logo/logo-white.svg" alt="Место" class="header__logo">
       <div class="header__line"></div>
@@ -20,30 +21,60 @@
         <!-- я специально использую изображения не из макета для проверки работы блока аватара -->
         <img src="images/examples/ava.jpg" alt="аватар" class="profile__avatar">
         <div class="profile__info">
-          <h1 class="profile__name">Alexander Alexander <img src="images/buttons/edit-button.svg" alt="редактировать" class="profile__edit-button"></h1>
-          <!-- <h1 class="profile__wrap">4
-            <img src="images/buttons/edit-button.svg" alt="редактировать" class="profile__edit-button">
-          </h1> -->
-          <img src="images/buttons/edit-button.svg" alt="редактировать" class="profile__edit-button">
-          <p class="profile__description">junior junior junior junior junior junior junior</p>
+          <h1 class="profile__name">Александр Огурцов</h1>
+          <button class="profile__edit-button"></button>
+          <p class="profile__description">ученик на "Яндекс Практикум" по программе frontend-разработчик</p>
         </div>
-        <div class="profile__add-button"></div>
-        <!-- <img src="images/buttons/add-button.svg" alt="добавить" class="profile__add-button"> -->
+        <button class="profile__add-button"></button>
       </section>
 
       <section class="elements">
         <div class="element">
-          <img src="images/examples/building.jpg" alt="" class="element__picture">
+          <img src="images/examples/spb.jpg" alt="Санкт-Петербург" class="element__picture">
+          <h2 class="element__title">Санкт-Петербург</h2>
+          <img src="images/glyph/like.svg" alt="сердечко" class="element__like-button">
+        </div>
+        <div class="element">
+          <img src="images/examples/karachayevsk.jpg" alt="Карачаевск" class="element__picture">
+          <h2 class="element__title">Карачаевск</h2>
+          <img src="images/glyph/like.svg" alt="сердечко" class="element__like-button">
+        </div>
+        <div class="element">
+          <img src="images/examples/elbrus.jpg" alt="Гора Эльбрус" class="element__picture">
           <h2 class="element__title">Гора Эльбрус</h2>
           <img src="images/glyph/like.svg" alt="сердечко" class="element__like-button">
         </div>
-
+        <div class="element">
+          <img src="images/examples/dombay.jpg" alt="Домбай" class="element__picture">
+          <h2 class="element__title">Домбай</h2>
+          <img src="images/glyph/like.svg" alt="сердечко" class="element__like-button">
+        </div>
+        <div class="element">
+          <img src="images/examples/ural.jpg" alt="Урал" class="element__picture">
+          <h2 class="element__title">Урал</h2>
+          <img src="images/glyph/like.svg" alt="сердечко" class="element__like-button">
+        </div>
+        <div class="element">
+          <img src="images/examples/ekaterinburg.jpg" alt="Екатеринбург" class="element__picture">
+          <h2 class="element__title">Екатеринбург</h2>
+          <img src="images/glyph/like.svg" alt="сердечко" class="element__like-button">
+        </div>
       </section>
     </main>
 
     <footer class="footer">
       <p class="footer__copyright">© 2023 Mesto Russia</p>
     </footer>
+
+    <div class="popup__opened2 popup">
+      <button class="popup__close-button"></button>
+      <div class="popup__container">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <input class="popup__field popup__field_name" value="" placeholder="Имя">
+        <input class="popup__field popup__field_description" value="" placeholder="Описание">
+        <button class="popup__submit-button">Сохранить</button>
+      </div>
+    </div>
     <!-- <div class="helper"></div> -->
 
   </div>
