@@ -1,0 +1,27 @@
+.popup {
+  background-color: #00000080;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  display: none;
+  grid-auto-rows: 1fr;
+  grid-template-columns: minmax(19px, 1fr) minmax(auto, 430px) minmax(19px, 1fr);
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    ". . cross"
+    ". input ."
+    ". . .";
+}
+
+@media (max-width: 767px) {
+  .popup {
+    grid-template-areas:
+      ". cross ."
+      ". input ."
+      ". . .";
+  }
+}
