@@ -1,0 +1,16 @@
+.element {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 0 0 31px;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 25px;
+  grid-template-areas:
+    "pic pic"
+    ". .";
+  align-items: center;
+
+  border-radius: 15px 15px 10px 10px;
+  /* overflow: hidden; */
+}
