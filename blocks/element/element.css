@@ -4,16 +4,13 @@
   padding: 0 0 31px;
 
   display: grid;
-  /* grid-auto-rows: 1fr;  */
   grid-template-columns: auto 1fr;
-  /* grid-template-rows: 1fr 1fr;  */
   gap: 25px;
   grid-template-areas:
     "pic pic"
     ". .";
   align-items: center;
 
-  /* ну и костыль конечно */
   border-radius: 15px 15px 10px 10px;
   /* overflow: hidden; */
 }

@@ -1,8 +1,6 @@
 .popup__container {
   grid-area: input;
 
-  /* max-width: 430px; */
-  /* height: 330px; */
   padding: 35px 36px 37px;
 
   display: flex;
@@ -17,7 +15,5 @@
 @media (max-width: 767px) {
   .popup__container {
     padding: 25px 22px;
-    /* max-width: 282px; */
-    /* height: 322px; */
   }
 }

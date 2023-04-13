@@ -24,12 +24,3 @@
   src: url("inter/Inter-Black.woff2") format("woff2"),
     url("inter/Inter-Black.woff") format("woff");
 }
-
-@font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 200;
-  font-display: swap;
-  src: url("inter/Inter-ExtraLight.woff2") format("woff2"),
-    url("inter/Inter-ExtraLight.woff") format("woff");
-}

@@ -10,7 +10,6 @@
   /* or 114% */
 
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
   overflow: hidden;
 
   color: #ffffff;
