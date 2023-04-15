@@ -9,10 +9,7 @@
   line-height: 22px;
 
   text-overflow: ellipsis;
-  white-space: wrap;
-  overflow: hidden;
-
-  text-overflow: ellipsis;
+  white-space: nowrap;
   overflow: hidden;
 
   color: #ffffff;
