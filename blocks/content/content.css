@@ -1,11 +1,12 @@
 .content {
   width: 100%;
   max-width: 880px;
+  padding: 0 0 66px;
 }
 
 @media (max-width: 767px) {
   .content {
-    padding: 0 19px;
+    padding: 0 19px 48px;
     box-sizing: border-box;
   }
 }

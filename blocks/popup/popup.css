@@ -1,5 +1,5 @@
 .popup {
-  background-color: #00000080;
+  background-color: rgba(0, 0, 0, 0.5);
 
   position: fixed;
   top: 0;
@@ -7,7 +7,7 @@
   right: 0;
   bottom: 0;
 
-  display: none;
+  display: grid;
   grid-auto-rows: 1fr;
   grid-template-columns: minmax(19px, 1fr) minmax(auto, 430px) minmax(19px, 1fr);
   grid-template-rows: 1fr 1fr 1fr;
@@ -15,6 +15,10 @@
     ". . cross"
     ". input ."
     ". . .";
+
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s,  opacity 0.2s linear;
 }
 
 @media (max-width: 767px) {

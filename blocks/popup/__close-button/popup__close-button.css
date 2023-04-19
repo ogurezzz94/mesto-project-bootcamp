@@ -1,11 +1,11 @@
 .popup__close-button {
-  margin: 0 0 8px 8px;
-  grid-area: cross;
-  justify-self: start;
-  align-self: flex-end;
+  position: absolute;
+  right: -40px;
+  top: -40px;
 
   width: 32px;
   height: 32px;
+
   background-image: url(../../../images/icons/cross.svg);
   background-color: transparent;
   background-size: 100%;
@@ -15,12 +15,13 @@
 
 @media (max-width: 767px) {
   .popup__close-button {
-    margin: 0 0 16px;
+    right: 0;
+    top: -36px;
     width: 20px;
     height: 20px;
-    justify-self: flex-end;
   }
 }
+
 
 .popup__close-button:hover {
   cursor: pointer;
