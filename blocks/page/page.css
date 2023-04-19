@@ -1,5 +1,6 @@
 .page {
   /* padding: 0 200px; */
+  padding: 45px 0 60px;
 
   display: flex;
   flex-direction: column;
@@ -13,12 +14,12 @@
 
 @media (max-width: 1279px) {
   .page {
-    padding: 0 110px;
+    padding: 45px 110px 60px;
   }
 }
 
 @media (max-width: 767px) {
   .page {
-    padding: 0;
+    padding: 28px 0 36px;
   }
 }

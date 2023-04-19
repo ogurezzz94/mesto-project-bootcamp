@@ -1,10 +1,10 @@
 .popup__field {
   box-sizing: border-box;
-  padding: 0 0 13px;
-  min-height: 27px;
+  padding: 0 0 10px;
+  max-height: 27px;
 
   border: 0;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 
   font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
@@ -17,7 +17,7 @@
 
 .popup__field:focus {
   outline: 0;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .popup__field:first-of-type {
