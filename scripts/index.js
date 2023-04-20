@@ -37,7 +37,9 @@ formPopup.addEventListener('submit', (e) => {
 //  это будут кнопка редактирования, крестик у попапа, фон у попапа,
 //  которые отвечают за закрытие или открытие попапа через тогл
 //  в html эти элементы с атрибутом data-btn="editPopupToggle"
-const togglePopupBtns = document.querySelectorAll('[data-btn="editPopupToggle"]');
+const togglePopupBtns = document.querySelectorAll(
+  '[data-btn="editPopupToggle"]'
+);
 // определение формы с именем эдитПрофайл
 // <form name="editProfile"></form>
 const formPopup2 = document.forms["editProfile"];
@@ -47,7 +49,9 @@ const editPopup2 = document.querySelector('[data-popup="editProfile"]');
 // определение элемента который отвечает за содержимое имени
 const profileName = document.querySelector('[data-profile="name"]');
 // определение элемента который отвечает за содержимое описания
-const profileDescription = document.querySelector('[data-profile="description"]');
+const profileDescription = document.querySelector(
+  '[data-profile="description"]'
+);
 
 // установка слушателя событий по клику для всех элементов из выше определенного массива
 // со всеми кнопками которые отвечают за вызов или закрытие попапа
@@ -95,3 +99,19 @@ formPopup2.addEventListener("submit", (e) => {
 });
 
 //спасибо за внимание!
+
+const card = document.querySelectorAll(".element");
+
+console.log(card);
+card.forEach((item) => {
+  let likeButton = item.children[2];
+  likeButton.addEventListener("click", () => {
+    likeButton.classList.toggle("element__like-button_enabled");
+  });
+});
+
+// children : HTMLCollection(3)
+// 0: img.element__picture
+// 1: h2.element__title
+// 2: button.element__like-button
+// length: 3
