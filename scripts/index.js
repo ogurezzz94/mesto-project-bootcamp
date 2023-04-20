@@ -104,11 +104,37 @@ const card = document.querySelectorAll(".element");
 
 console.log(card);
 card.forEach((item) => {
-  let likeButton = item.children[2];
+  let likeButton = item.children[3];
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("element__like-button_enabled");
+    return;
   });
 });
+
+// console.log(card);
+// card.forEach((item) => {
+//   let likeButton = item.children[2];
+
+//   console.log(item.children.length);
+
+//   likeButton.addEventListener("click", () => {
+//     console.dir(item);
+
+//     let whereIsLikeBtn = Array.from(item.children);
+//     console.log(whereIsLikeBtn);
+
+//     let thereIsLike = whereIsLikeBtn.forEach((el) => {
+//       console.log(el.classList);
+//       let classlistArray = Array.from(el.classList)
+//       classlistArray.filter((el) => el.includes(button));
+//     });
+
+//     console.log(thereIsLike);
+
+//     likeButton.classList.toggle("element__like-button_enabled");
+//     return;
+//   });
+// });
 
 // children : HTMLCollection(3)
 // 0: img.element__picture
