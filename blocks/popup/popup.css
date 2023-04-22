@@ -7,25 +7,31 @@
   right: 0;
   bottom: 0;
 
-  display: grid;
+  /* display: grid;
   grid-auto-rows: 1fr;
   grid-template-columns: minmax(19px, 1fr) minmax(auto, 430px) minmax(19px, 1fr);
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
     ". . cross"
     ". input ."
-    ". . .";
+    ". . ."; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s,  opacity 0.5s;
+  transition: visibility 0s, opacity 0.5s;
 }
 
 @media (max-width: 767px) {
   .popup {
-    grid-template-areas:
+    padding: 0 19px;
+
+    /* grid-template-areas:
       ". cross ."
       ". input ."
-      ". . .";
+      ". . ."; */
   }
 }

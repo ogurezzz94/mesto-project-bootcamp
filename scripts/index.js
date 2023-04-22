@@ -1,143 +1,141 @@
-/*
-// VERSION 1
-const editBtn = document.querySelector('[data-btn="edit"]');  // Находим Edit Profile Button
-// Вешаем обработчик для Edit Profile Button
-editBtn.addEventListener('click', () => {
-    editPopup.classList.add('popup_opened');
-    console.log('className', editPopup.className);
-})
+//!  █████╗  █████╗ ███╗  ██╗ ██████╗████████╗ █████╗ ███╗  ██╗████████╗ ██████╗
+//! ██╔══██╗██╔══██╗████╗ ██║██╔════╝╚══██╔══╝██╔══██╗████╗ ██║╚══██╔══╝██╔════╝
+//! ██║  ╚═╝██║  ██║██╔██╗██║╚█████╗    ██║   ███████║██╔██╗██║   ██║   ╚█████╗
+//! ██║  ██╗██║  ██║██║╚████║ ╚═══██╗   ██║   ██╔══██║██║╚████║   ██║    ╚═══██╗
+//! ╚█████╔╝╚█████╔╝██║ ╚███║██████╔╝   ██║   ██║  ██║██║ ╚███║   ██║   ██████╔╝
+//!  ╚════╝  ╚════╝ ╚═╝  ╚══╝╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚══╝   ╚═╝   ╚═════╝
 
-const editPopup = document.querySelector('[data-popup="editProfile"]'); // Находим Edit Popup
-// Вешаем обработчик для фона Edit Popup
-editPopup.addEventListener('click', () => {
-    editPopup.classList.remove('popup_opened');
-    formPopup.reset();
-});
+// выбрал все элементы в массиве для лайков
+const likeButtons = document.querySelectorAll(".element__like-button");
+// все кнопки удаления
+const removeButtons = document.querySelectorAll(".element__remove-button");
 
-const closeBtn = document.querySelector('[data-btn="closePopup"]'); // Находим Close Button
-// Вешаем обработчик для Close Button
-closeBtn.addEventListener('click', () => {
-  editPopup.classList.remove('popup_opened');
-})
+//* ██╗     ██╗██╗  ██╗███████╗  ██████╗ ██╗   ██╗████████╗████████╗ █████╗ ███╗  ██╗ ██████╗
+//* ██║     ██║██║ ██╔╝██╔════╝  ██╔══██╗██║   ██║╚══██╔══╝╚══██╔══╝██╔══██╗████╗ ██║██╔════╝
+//* ██║     ██║█████═╝ █████╗    ██████╦╝██║   ██║   ██║      ██║   ██║  ██║██╔██╗██║╚█████╗
+//* ██║     ██║██╔═██╗ ██╔══╝    ██╔══██╗██║   ██║   ██║      ██║   ██║  ██║██║╚████║ ╚═══██╗
+//* ███████╗██║██║ ╚██╗███████╗  ██████╦╝╚██████╔╝   ██║      ██║   ╚█████╔╝██║ ╚███║██████╔╝
+//* ╚══════╝╚═╝╚═╝  ╚═╝╚══════╝  ╚═════╝  ╚═════╝    ╚═╝      ╚═╝    ╚════╝ ╚═╝  ╚══╝╚═════╝
 
-// Находим EditProfile Form
-const formPopup = document.forms['editProfile'];
-// Вешаем обработчик для EditProfile Form (click)
-formPopup.addEventListener('click', (e) => {
-  e.stopPropagation();
-});
-// Вешаем обработчик для EditProfile Form (submit)
-formPopup.addEventListener('submit', (e) => {
-  e.preventDefault();
-});
-*/
-
-// VERSION 2
-//  определение массива по атрибуту датасет всем элементам,
-//  это будут кнопка редактирования, крестик у попапа, фон у попапа,
-//  которые отвечают за закрытие или открытие попапа через тогл
-//  в html эти элементы с атрибутом data-btn="editPopupToggle"
-const togglePopupBtns = document.querySelectorAll(
-  '[data-btn="editPopupToggle"]'
-);
-// определение формы с именем эдитПрофайл
-// <form name="editProfile"></form>
-const formPopup2 = document.forms["editProfile"];
-// определение попап-элемента, он же фон, но под другим датасетом
-// чтобы можно было повесить обработчик вызова всего попапа
-const editPopup2 = document.querySelector('[data-popup="editProfile"]');
-// определение элемента который отвечает за содержимое имени
-const profileName = document.querySelector('[data-profile="name"]');
-// определение элемента который отвечает за содержимое описания
-const profileDescription = document.querySelector(
-  '[data-profile="description"]'
-);
-
-// установка слушателя событий по клику для всех элементов из выше определенного массива
-// со всеми кнопками которые отвечают за вызов или закрытие попапа
-togglePopupBtns.forEach((btn) => {
-  // у каждой кнопки "слушать" клик и выполнять следующие действия
-  btn.addEventListener("click", () => {
-    // для всего попапа тоглится класс,
-    // который либо добавляется либо убирается,
-    // тем самым попап либо появляется, либо исчезает
-    editPopup2.classList.toggle("popup_opened");
-    // все содержимое удаляется, без условий, бесплатно, без регистрации и смс,
-    // всегда когда был совершено нажатие на любую из кнопок для тогл
-    formPopup2.reset();
+// принимает в себя массив, в и меняет у него классы для лайков
+function toggleLikeButton(array) {
+  // выполняем для каждого элемента массива
+  array.forEach((button) => {
+    // вешаем событие клика по кнопке
+    button.addEventListener("click", () => {
+      // тоглим класс для кнопки
+      button.classList.toggle("element__like-button_enabled");
+    });
   });
-});
+  // я бы мог написать явный выход из функции, но не вижу смысла
+}
+// вызываем функцию, передаем ей массив
+toggleLikeButton(likeButtons);
 
-// установка слушателя событий по клику для всего попапа,
-// чтобы предотвратить закрытие кликая по форме внутри попапа,
-// функция закрытия была установлена ранее и распростронялась на все элементы,
-// которые попадают в попап
-formPopup2.addEventListener("click", (e) => {
-  e.stopPropagation();
-});
+//! ███╗   ███╗ █████╗ ██████╗  █████╗ ██╗        ██╗       ██╗██╗███╗  ██╗██████╗  █████╗  ██╗       ██╗ ██████╗██╗
+//! ████╗ ████║██╔══██╗██╔══██╗██╔══██╗██║        ██║  ██╗  ██║██║████╗ ██║██╔══██╗██╔══██╗ ██║  ██╗  ██║██╔════╝╚═╝
+//! ██╔████╔██║██║  ██║██║  ██║███████║██║        ╚██╗████╗██╔╝██║██╔██╗██║██║  ██║██║  ██║ ╚██╗████╗██╔╝╚█████╗
+//! ██║╚██╔╝██║██║  ██║██║  ██║██╔══██║██║         ████╔═████║ ██║██║╚████║██║  ██║██║  ██║  ████╔═████║  ╚═══██╗
+//! ██║ ╚═╝ ██║╚█████╔╝██████╔╝██║  ██║███████╗    ╚██╔╝ ╚██╔╝ ██║██║ ╚███║██████╔╝╚█████╔╝  ╚██╔╝ ╚██╔╝ ██████╔╝██╗
+//! ╚═╝     ╚═╝ ╚════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝     ╚═╝   ╚═╝  ╚═╝╚═╝  ╚══╝╚═════╝  ╚════╝    ╚═╝   ╚═╝  ╚═════╝ ╚═╝
 
-// установка слушателя событий по нажатию на кнопку сохранить
-// <button type="submit">Сохранить</button>
-formPopup2.addEventListener("submit", (e) => {
-  // остановка стандартной отправки формы
-  e.preventDefault();
-  // обращаясь через форму
-  // определяем значения атрибутов велью,
-  // переданные в именованные инпуты
-  // <input name="name">
-  const name = formPopup2.name.value;
-  // и <input name="description">
-  const description = formPopup2.description.value;
-  // передаем подученные значения в необходимую разметку html
-  // с помощью метода текстКонтент
-  profileName.textContent = name;
-  profileDescription.textContent = description;
-  // закрываем попап через событие отправки формы,
-  // на всякий случай прописал через явное удаление класса,
-  // чтоб показать что так я тоже умею, а не только тоглить
-  editPopup2.classList.remove("popup_opened");
-});
+//:  █████╗ ██████╗ ███████╗███╗  ██╗
+//: ██╔══██╗██╔══██╗██╔════╝████╗ ██║
+//: ██║  ██║██████╔╝█████╗  ██╔██╗██║
+//: ██║  ██║██╔═══╝ ██╔══╝  ██║╚████║
+//: ╚█████╔╝██║     ███████╗██║ ╚███║
+//:  ╚════╝ ╚═╝     ╚══════╝╚═╝  ╚══╝
 
-//спасибо за внимание!
+// определяем кнопку которая будет вызывать конкретный попап
+const openEditPopupButton = document.querySelector(".profile__edit-button");
+// выбрал все существующие попапы,
+// они нужны чтобы установить остановку передачи событий для вложенных элементов
+const popups = document.querySelectorAll(".popup");
 
-const card = document.querySelectorAll(".element");
-
-console.log(card);
-card.forEach((item) => {
-  let likeButton = item.children[3];
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("element__like-button_enabled");
-    return;
+// функция которая будет вызывать необходимый попап
+function openModalWithButton(button) {
+  // можго было бы нгазгачить и отделбную константу и передавать ее в дальнейшем,
+  // но она нужна тут всего один раз поэтому я ее не делал
+  // const classSelector = button.dataset.btn;
+  // определил с каким именно окном надо взаимодействовать и заключил в константу
+  // обьявлена в пределах этой функции, так как определяется только здесь с помощью передаваемого аргумента
+  const modalWindow = document.querySelector(button.dataset.btn);
+  // обработчик по клику
+  button.addEventListener("click", () => {
+    // добавляет класс который открывает попап
+    modalWindow.classList.add("popup_opened");
+    // заодно и очистил форму,
+    // если в ней что то написано,
+    // если она вообще будет,
+    // определил только первого и единственного ребенка модального окна,
+    // у которого будет происходить сброс формы
+    const childOfModal = modalWindow.children[0];
+    if (childOfModal.nodeName === "FORM") {
+      childOfModal.reset();
+    }
   });
-});
+}
+// вызвал функцию, которая открывает попап в зависимости от переданное данной функции кнопки
+openModalWithButton(openEditPopupButton);
+// openModalWithButton(openAddPopupBtn);
+// openModalWithButton(openPreviewBtn);
 
-// console.log(card);
-// card.forEach((item) => {
-//   let likeButton = item.children[2];
+//:  █████╗ ██╗      █████╗  ██████╗███████╗
+//: ██╔══██╗██║     ██╔══██╗██╔════╝██╔════╝
+//: ██║  ╚═╝██║     ██║  ██║╚█████╗ █████╗
+//: ██║  ██╗██║     ██║  ██║ ╚═══██╗██╔══╝
+//: ╚█████╔╝███████╗╚█████╔╝██████╔╝███████╗
+//:  ╚════╝ ╚══════╝ ╚════╝ ╚═════╝ ╚══════╝
 
-//   console.log(item.children.length);
+// определяем массив всех элементов которые закрывают попап
+const closePopupElements = document.querySelectorAll(
+  ".popup__close-button , .popup"
+);
 
-//   likeButton.addEventListener("click", () => {
-//     console.dir(item);
+// закрывает модалки по нажитию определенных кнопок
+function closeModalWindow(elements) {
+  // для каждой кнопки из массива
+  elements.forEach((el) => {
+    // обработчик по клику
+    el.addEventListener("click", () => {
+      // для всех модалок с классом попап, они находятся в массиве попапс
+      popups.forEach((e) => {
+        // удалаяем класс
+        e.classList.remove("popup_opened");
+      });
+    });
+  });
+}
+// вызов
+closeModalWindow(closePopupElements);
 
-//     let whereIsLikeBtn = Array.from(item.children);
-//     console.log(whereIsLikeBtn);
+//:  ██████╗████████╗ █████╗ ██████╗   ██████╗ ██████╗  █████╗ ██████╗
+//: ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗  ██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+//: ╚█████╗    ██║   ██║  ██║██████╔╝  ██████╔╝██████╔╝██║  ██║██████╔╝
+//:  ╚═══██╗   ██║   ██║  ██║██╔═══╝   ██╔═══╝ ██╔══██╗██║  ██║██╔═══╝
+//: ██████╔╝   ██║   ╚█████╔╝██║       ██║     ██║  ██║╚█████╔╝██║
+//: ╚═════╝    ╚═╝    ╚════╝ ╚═╝       ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝
 
-//     let thereIsLike = whereIsLikeBtn.forEach((el) => {
-//       console.log(el.classList);
-//       let classlistArray = Array.from(el.classList)
-//       classlistArray.filter((el) => el.includes(button));
-//     });
+// массив в котором находятся все элементы внутри попапов
+const modalWindow = document.querySelectorAll(
+  ".popup__container, .popup__preview"
+);
+// console.log(modalWindow);
 
-//     console.log(thereIsLike);
+// останавлявает передачу события дочерним элементам
+function stopProp(element) {
+  element.forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  });
+}
 
-//     likeButton.classList.toggle("element__like-button_enabled");
-//     return;
-//   });
-// });
+stopProp(modalWindow);
 
-// children : HTMLCollection(3)
-// 0: img.element__picture
-// 1: h2.element__title
-// 2: button.element__like-button
-// length: 3
+// ███████╗██████╗░██╗████████╗  ██████╗░░█████╗░██████╗░██╗░░░██╗██████╗░
+// ██╔════╝██╔══██╗██║╚══██╔══╝  ██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔══██╗
+// █████╗░░██║░░██║██║░░░██║░░░  ██████╔╝██║░░██║██████╔╝██║░░░██║██████╔╝
+// ██╔══╝░░██║░░██║██║░░░██║░░░  ██╔═══╝░██║░░██║██╔═══╝░██║░░░██║██╔═══╝░
+// ███████╗██████╔╝██║░░░██║░░░  ██║░░░░░╚█████╔╝██║░░░░░╚██████╔╝██║░░░░░
+// ╚══════╝╚═════╝░╚═╝░░░╚═╝░░░  ╚═╝░░░░░░╚════╝░╚═╝░░░░░░╚═════╝░╚═╝░░░░░
