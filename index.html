@@ -21,10 +21,10 @@
         <img src="images/examples/ava.jpg" alt="аватар" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name" data-profile="name">Александр Огурцов</h1>
-          <button class="profile__edit-button" type="button" aria-label="Редактировать профиль" data-btn=".popup_action_edit-profile"></button>
+          <button class="profile__edit-button" type="button" aria-label="Редактировать профиль" data-open=".popup_action_edit-profile"></button>
           <p class="profile__description" data-profile="description">ученик на "Яндекс Практикум" по программе frontend-разработчик</p>
         </div>
-        <button class="profile__add-button" type="button" aria-label="Добавить изображения"></button>
+        <button class="profile__add-button" type="button" aria-label="Добавить изображения" data-open=".popup_action_add-image"></button>
       </section>
 
       <section class="elements" aria-label="Фотографии">
@@ -71,9 +71,9 @@
       <p class="footer__copyright">© 2023 Mesto Russia</p>
     </footer>
 
-    <div class="popup popup_action_edit-profile" data-popup="editProfile" data-btn="editPopupToggle">
-      <form class="popup__container" name="editProfile" method="get">
-        <button class="popup__close-button" type="reset" aria-label="Крестик" data-btn="editPopupToggle"></button>
+    <div class="popup popup_action_edit-profile">
+      <form class="popup__container" name="edit-profile" method="get">
+        <button class="popup__close-button" type="reset" aria-label="Крестик"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <input class="popup__field popup__field_input_name" placeholder="Имя" name="name" type="text" required autocomplete="off">
         <input class="popup__field popup__field_input_description" placeholder="Описание" name="description" type="text" required autocomplete="off">
@@ -81,20 +81,21 @@
       </form>
     </div>
 
-    <div class="popup popup_action_add-image" data-popup="editProfile" data-btn="editPopupToggle">
-      <form class="popup__container" name="editProfile2" method="get">
-        <button class="popup__close-button" type="reset" aria-label="Крестик" data-btn="editPopupToggle"></button>
-        <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__field popup__field_input_name" placeholder="Имя" name="name" type="text" required autocomplete="off">
-        <input class="popup__field popup__field_input_description" placeholder="Описание" name="description" type="text" required autocomplete="off">
+    <div class="popup popup_action_add-image">
+      <form class="popup__container" name="add-image" method="get">
+        <button class="popup__close-button" type="reset" aria-label="Крестик"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <input class="popup__field popup__field_input_title" placeholder="Название" name="title" type="text" required autocomplete="off">
+        <input class="popup__field popup__field_input_link" placeholder="Ссылка на изображение" name="link" type="text" required autocomplete="off">
         <button class="popup__submit-button" type="submit" aria-label="Сохранить">Сохранить</button>
       </form>
     </div>
 
-    <div class="popup popup_action_show-image popup_opened1">
+    <div class="popup popup_action_show-image">
       <div class="popup__preview">
-        <button class="popup__close-button"></button>
-        <img src="images/examples/ekaterinburg.jpg" alt="Предпросмотр" class="popup_image">
+        <button class="popup__close-button" type="button"></button>
+        <img src="/images/examples/ava.jpg" alt="Предпросмотр" class="popup_image">
+        <h2 class="popup__image-description"></h2>
       </div>
     </div>
 
