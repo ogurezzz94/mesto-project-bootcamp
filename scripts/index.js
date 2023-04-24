@@ -5,10 +5,68 @@
 //! ╚█████╔╝╚█████╔╝██║ ╚███║██████╔╝   ██║   ██║  ██║██║ ╚███║   ██║   ██████╔╝
 //!  ╚════╝  ╚════╝ ╚═╝  ╚══╝╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚══╝   ╚═╝   ╚═════╝
 
-// выбрал все элементы в массиве для лайков
-const likeButtons = document.querySelectorAll(".element__like-button");
-// все кнопки удаления
+// likes removes
+// const likeButtons = document.querySelectorAll(".element__like-button");
 const removeButtons = document.querySelectorAll(".element__remove-button");
+
+// open
+const openEditPopupButton = document.querySelector(".profile__edit-button");
+const openAddPopupButton = document.querySelector(".profile__add-button");
+const popups = document.querySelectorAll(".popup");
+
+// close
+const closePopupElements = document.querySelectorAll(
+  ".popup, .popup__close-button"
+);
+
+// stop prop
+const modalWindow = document.querySelectorAll(
+  ".popup__container, .popup__preview"
+);
+
+// open modals
+const popupEditProfileForm = document.forms["edit-profile"];
+const profileName = document.querySelector(".profile__name");
+const profileDescription = document.querySelector(".profile__description");
+
+// templates
+const popupAddImageForm = document.forms["add-image"];
+const templateCard = document.querySelector(".template-element").content;
+const templateObject = {};
+
+const initialCards = [
+  {
+    name: "Архыз",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+  },
+  {
+    name: "Челябинская область",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
+  },
+  {
+    name: "Иваново",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
+  },
+  {
+    name: "Камчатка",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
+  },
+  {
+    name: "Холмогорский район",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
+  },
+  {
+    name: "Байкал",
+    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
+  },
+];
+
+const objectCards = initialCards.map(function (item) {
+  return {
+    title: item.name,
+    link: item.link,
+  };
+});
 
 //* ██╗     ██╗██╗  ██╗███████╗  ██████╗ ██╗   ██╗████████╗████████╗ █████╗ ███╗  ██╗ ██████╗
 //* ██║     ██║██║ ██╔╝██╔════╝  ██╔══██╗██║   ██║╚══██╔══╝╚══██╔══╝██╔══██╗████╗ ██║██╔════╝
@@ -17,20 +75,11 @@ const removeButtons = document.querySelectorAll(".element__remove-button");
 //* ███████╗██║██║ ╚██╗███████╗  ██████╦╝╚██████╔╝   ██║      ██║   ╚█████╔╝██║ ╚███║██████╔╝
 //* ╚══════╝╚═╝╚═╝  ╚═╝╚══════╝  ╚═════╝  ╚═════╝    ╚═╝      ╚═╝    ╚════╝ ╚═╝  ╚══╝╚═════╝
 
-// принимает в себя массив, в и меняет у него классы для лайков
-function toggleLikeButton(array) {
-  // выполняем для каждого элемента массива
-  array.forEach((button) => {
-    // вешаем событие клика по кнопке
-    button.addEventListener("click", () => {
-      // тоглим класс для кнопки
-      button.classList.toggle("element__like-button_enabled");
-    });
+function toggleLikeButton(item) {
+  item.addEventListener("click", () => {
+    item.classList.toggle("element__like-button_enabled");
   });
-  // я бы мог написать явный выход из функции, но не вижу смысла
 }
-// вызываем функцию, передаем ей массив
-toggleLikeButton(likeButtons);
 
 //! ███╗   ███╗ █████╗ ██████╗  █████╗ ██╗        ██╗       ██╗██╗███╗  ██╗██████╗  █████╗  ██╗       ██╗ ██████╗
 //! ████╗ ████║██╔══██╗██╔══██╗██╔══██╗██║        ██║  ██╗  ██║██║████╗ ██║██╔══██╗██╔══██╗ ██║  ██╗  ██║██╔════╝
@@ -46,61 +95,16 @@ toggleLikeButton(likeButtons);
 //* ╚█████╔╝██║     ███████╗██║ ╚███║
 //*  ╚════╝ ╚═╝     ╚══════╝╚═╝  ╚══╝
 
-// определяем кнопку которая будет вызывать конкретный попап
-const openEditPopupButton = document.querySelector(".profile__edit-button");
-
-const openAddPopupButton = document.querySelector(".profile__add-button");
-// выбрал все существующие попапы,
-// они нужны чтобы установить остановку передачи событий для вложенных элементов
-const popups = document.querySelectorAll(".popup");
-
 // определение коллекции, каждый элемент которой должен получить необходимый датасет
-const openPreviewButtons = document.querySelectorAll(".element__picture");
-// задал необходимый датасет каждому элементу этой коллекции,
-// это понадобится при использовании универсальной функции
-openPreviewButtons.forEach(
-  (element) => (element.dataset.open = ".popup_action_show-image")
-);
-// функция которая будет вызывать необходимый попап
-function openModalWithButton(button) {
-  // можго было бы нгазгачить и отделбную константу и передавать ее в дальнейшем,
-  // но она нужна тут всего один раз поэтому я ее не делал
-  // const classSelector = button.dataset.open;
+// const openPreviewButtons = document.querySelectorAll(".element__picture");
 
-  // если будет передана коллекция, а она будет - коллекция карточек,
-  // то обработчик вешается на все карточки из этого массива
-  // проверка на коллекцию
-  if (NodeList.prototype.isPrototypeOf(button)) {
-    // тут передана сама коллекция
-    button.forEach((element) => {
-      // обработчик для каждого элемента
-      element.addEventListener("click", () => {
-        // у каждой кнопки в датасете указано какой элемент она должна открыть,
-        // передал это значение в константу
-        const modalWindow = document.querySelector(element.dataset.open);
-        // добавил класс, выше упомянотому элементу
-        modalWindow.classList.add("popup_opened");
-      });
-    });
-  } else {
-    // определил с каким именно окном надо взаимодействовать и заключил в константу
-    // обьявлена в пределах этой функции, так как определяется только здесь с помощью передаваемого аргумента
-    const modalWindow = document.querySelector(button.dataset.open);
-    // обработчик по клику
-    button.addEventListener("click", () => {
-      // добавляет класс который открывает попап
-      modalWindow.classList.add("popup_opened");
-      // const childOfModal = modalWindow.children[0];
-      // if (childOfModal.nodeName === "FORM") {
-      //   childOfModal.reset();
-      // }
-    });
-  }
+function openModalWithButton(button) {
+  const modalWindow = document.querySelector(button.dataset.open);
+  button.addEventListener("click", () => {
+    placeholderInitialValue(popupEditProfileForm);
+    modalWindow.classList.add("popup_opened");
+  });
 }
-// вызвал функцию, которая открывает попап в зависимости от переданное данной функции кнопки
-openModalWithButton(openEditPopupButton);
-openModalWithButton(openAddPopupButton);
-openModalWithButton(openPreviewButtons);
 
 //*  █████╗ ██╗      █████╗  ██████╗███████╗
 //* ██╔══██╗██║     ██╔══██╗██╔════╝██╔════╝
@@ -109,36 +113,25 @@ openModalWithButton(openPreviewButtons);
 //* ╚█████╔╝███████╗╚█████╔╝██████╔╝███████╗
 //*  ╚════╝ ╚══════╝ ╚════╝ ╚═════╝ ╚══════╝
 
-// определяем массив всех элементов которые закрывают попап
-const closePopupElements = document.querySelectorAll(
-  ".popup__close-button , .popup"
-);
-
-// закрывает модалки по нажитию определенных кнопок
 function closeModalWindow(elements) {
-  // для каждой кнопки из массива
   elements.forEach((el) => {
-    // обработчик по клику
-    el.addEventListener("click", () => {
-      // для всех модалок с классом попап, они находятся в массиве попапс
-      popups.forEach((e) => {
-        // удалаяем класс
-        e.classList.remove("popup_opened");
-        // заодно и очистил форму,
-        // если в ней что то написано,
-        // если она вообще будет,
-        // определил только первого и единственного ребенка модального окна,
-        // у которого будет происходить сброс формы
-        const childOfModal = e.firstElementChild;
-        if (childOfModal.nodeName === "FORM") {
-          childOfModal.reset();
-        }
-      });
-    });
+    el.addEventListener("click", () => closeOnElement());
   });
 }
-// вызов
-closeModalWindow(closePopupElements);
+
+function closeOnElement() {
+  popups.forEach((e) => {
+    e.classList.remove("popup_opened");
+    checkForForm(e);
+  });
+}
+
+function checkForForm(item) {
+  const childOfModal = item.firstElementChild;
+  if (childOfModal.nodeName === "FORM") {
+    childOfModal.reset();
+  }
+}
 
 //*  ██████╗████████╗ █████╗ ██████╗   ██████╗ ██████╗  █████╗ ██████╗
 //* ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗  ██╔══██╗██╔══██╗██╔══██╗██╔══██╗
@@ -147,12 +140,6 @@ closeModalWindow(closePopupElements);
 //* ██████╔╝   ██║   ╚█████╔╝██║       ██║     ██║  ██║╚█████╔╝██║
 //* ╚═════╝    ╚═╝    ╚════╝ ╚═╝       ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝
 
-// массив в котором находятся все элементы внутри попапов
-const modalWindow = document.querySelectorAll(
-  ".popup__container, .popup__preview"
-);
-
-// останавлявает передачу события дочерним элементам
 function stopProp(element) {
   element.forEach((el) => {
     el.addEventListener("click", (e) => {
@@ -161,8 +148,6 @@ function stopProp(element) {
   });
 }
 
-stopProp(modalWindow);
-
 //* ███████╗██████╗ ██╗████████╗  ██████╗  █████╗ ██████╗ ██╗   ██╗██████╗
 //* ██╔════╝██╔══██╗██║╚══██╔══╝  ██╔══██╗██╔══██╗██╔══██╗██║   ██║██╔══██╗
 //* █████╗  ██║  ██║██║   ██║     ██████╔╝██║  ██║██████╔╝██║   ██║██████╔╝
@@ -170,32 +155,83 @@ stopProp(modalWindow);
 //* ███████╗██████╔╝██║   ██║     ██║     ╚█████╔╝██║     ╚██████╔╝██║
 //* ╚══════╝╚═════╝ ╚═╝   ╚═╝     ╚═╝      ╚════╝ ╚═╝      ╚═════╝ ╚═╝
 
-const popupEditProfileForm = document.forms["edit-profile"];
-const profileName = document.querySelector(".profile__name");
-const profileDescription = document.querySelector(".profile__description");
-
-const popupAddImageForm = document.forms["add-image"];
+function placeholderInitialValue(form) {
+  const name = profileName.textContent;
+  const description = profileDescription.textContent;
+  form.name.placeholder = name;
+  form.description.placeholder = description;
+}
 
 function editProfile(form) {
-  // установка слушателя событий по нажатию на кнопку сохранить
-  // <button type="submit">Сохранить</button>
   form.addEventListener("submit", (e) => {
-    // обращаясь через форму
-    // определяем значения атрибутов велью,
-    // переданные в именованные инпуты
-    // <input name="name">
+    e.preventDefault();
     const name = form.name.value;
-    // и <input name="description">
     const description = form.description.value;
-    // передаем подученные значения в необходимую разметку html
-    // с помощью метода текстКонтент
+    form.name.placeholder = name;
+    form.description.placeholder = description;
     profileName.textContent = name;
     profileDescription.textContent = description;
-    // закрываем попап через событие отправки формы,
-    // на всякий случай прописал через явное удаление класса у родителя
     form.offsetParent.classList.remove("popup_opened");
-    // остановка стандартной отправки формы
-    e.preventDefault();
+    form.reset();
   });
 }
+
+//*  █████╗ ██████╗ ██████╗   ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
+//* ██╔══██╗██╔══██╗██╔══██╗  ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
+//* ███████║██║  ██║██║  ██║  ██║██╔████╔██║███████║██║  ██╗ █████╗
+//* ██╔══██║██║  ██║██║  ██║  ██║██║╚██╔╝██║██╔══██║██║  ╚██╗██╔══╝
+//* ██║  ██║██████╔╝██████╔╝  ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
+//* ╚═╝  ╚═╝╚═════╝ ╚═════╝   ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+
+function addImage(form, object) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    object["title"] = form.title.value;
+    object["link"] = form.link.value;
+    form.offsetParent.classList.remove("popup_opened");
+    addCard(object);
+    form.reset();
+  });
+}
+
+function addCard(object) {
+  const templateElement = templateCard
+    .querySelector(".element")
+    .cloneNode(true);
+  const templateImage = templateElement.querySelector(".element__image");
+  const templateTitle = templateElement.querySelector(".element__title");
+  const templateSpace = document.querySelector(".elements");
+  const templateLike = templateElement.querySelector(".element__like-button");
+
+  templateImage.src = object["link"];
+  templateImage.alt = object["title"];
+  templateTitle.textContent = object["title"];
+  templateSpace.prepend(templateElement);
+  toggleLikeButton(templateLike);
+}
+
+//!  █████╗  █████╗ ██╗     ██╗      ██████╗
+//! ██╔══██╗██╔══██╗██║     ██║     ██╔════╝
+//! ██║  ╚═╝███████║██║     ██║     ╚█████╗
+//! ██║  ██╗██╔══██║██║     ██║      ╚═══██╗
+//! ╚█████╔╝██║  ██║███████╗███████╗██████╔╝
+//!  ╚════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝
+
+// render initial
+objectCards.forEach(addCard);
+
+// open forms
+openModalWithButton(openEditPopupButton);
+openModalWithButton(openAddPopupButton);
+
+// close modals
+closeModalWindow(closePopupElements);
+
+// stop ptop
+stopProp(modalWindow);
+
+// submit for edit
 editProfile(popupEditProfileForm);
+
+// submit for add
+addImage(popupAddImageForm, templateObject);
