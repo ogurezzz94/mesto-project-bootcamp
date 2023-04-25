@@ -16,8 +16,15 @@ const closePopupElements = document.querySelectorAll(
 );
 
 // stop prop
-const modalWindow = document.querySelectorAll(
-  ".popup__container, .popup__preview"
+const modalWindows = document.querySelectorAll(
+  ".popup__container, .popup__figure"
+);
+
+// preview
+const popupPreview = document.querySelector(".popup_action_preview");
+const popupImage = popupPreview.querySelector(".popup__image");
+const popupImageDescription = popupPreview.querySelector(
+  ".popup__image-description"
 );
 
 // open modals
@@ -196,7 +203,9 @@ function addCard(object) {
   const templateImage = templateElement.querySelector(".element__image");
   const templateTitle = templateElement.querySelector(".element__title");
   const templateLike = templateElement.querySelector(".element__like-button");
-  const templateRemove = templateElement.querySelector(".element__remove-button");
+  const templateRemove = templateElement.querySelector(
+    ".element__remove-button"
+  );
 
   templateImage.src = object["link"];
   templateImage.alt = object["title"];
@@ -221,13 +230,19 @@ function removeCard(button) {
   });
 }
 
-const popupPreview = document.querySelector()
+//* ██████╗ ██████╗ ███████╗██╗   ██╗██╗███████╗ ██╗       ██╗
+//* ██╔══██╗██╔══██╗██╔════╝██║   ██║██║██╔════╝ ██║  ██╗  ██║
+//* ██████╔╝██████╔╝█████╗  ╚██╗ ██╔╝██║█████╗   ╚██╗████╗██╔╝
+//* ██╔═══╝ ██╔══██╗██╔══╝   ╚████╔╝ ██║██╔══╝    ████╔═████║
+//* ██║     ██║  ██║███████╗  ╚██╔╝  ██║███████╗  ╚██╔╝ ╚██╔╝
+//* ╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝╚══════╝   ╚═╝   ╚═╝
 
-function openPreview (button) {
-  button.addEventListener("click" ,() => {
-    console.dir()
-    .classList.add("popup_opened");
-  })
+function openPreview(item) {
+  item.addEventListener("click", () => {
+    popupImage.src = item.src;
+    popupImageDescription.textContent = item.alt;
+    popupPreview.classList.add("popup_opened");
+  });
 }
 
 //!  █████╗  █████╗ ██╗     ██╗      ██████╗
@@ -248,7 +263,7 @@ openModalWithButton(openAddPopupButton);
 closeModalWindow(closePopupElements);
 
 // stop ptop
-stopProp(modalWindow);
+stopProp(modalWindows);
 
 // submit for edit
 editProfile(popupEditProfileForm);
