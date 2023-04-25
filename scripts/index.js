@@ -102,7 +102,7 @@ function toggleLikeButton(item) {
 function openModalWithButton(button) {
   const modalWindow = document.querySelector(button.dataset.open);
   button.addEventListener("click", () => {
-    placeholderInitialValue(popupEditProfileForm);
+    initialValue(popupEditProfileForm);
     modalWindow.classList.add("popup_opened");
   });
 }
@@ -159,15 +159,15 @@ function stopProp(array) {
 //* ╚══════╝╚═════╝ ╚═╝   ╚═╝     ╚═╝      ╚════╝ ╚═╝      ╚═════╝ ╚═╝
 
 // get values for the holder
-function placeholderInitialValue(form) {
-  form.name.placeholder = profileName.textContent; // it might be form.name.value but i dont want it that way
-  form.description.placeholder = profileDescription.textContent; // same here
+function initialValue(form) {
+  form.name.value = profileName.textContent;
+  form.description.value = profileDescription.textContent;
 }
 
 function editProfile(form) {
   form.addEventListener("submit", (element) => {
-    form.name.placeholder, profileName.textContent = form.name.value;
-    form.description.placeholder, profileDescription.textContent = form.description.value;
+    profileName.textContent = form.name.value;
+    profileDescription.textContent = form.description.value;
 
     form.offsetParent.classList.remove("popup_opened");
     element.preventDefault();
