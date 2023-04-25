@@ -8,6 +8,8 @@
 // likes removes
 // const likeButtons = document.querySelectorAll(".element__like-button");
 const removeButtons = document.querySelectorAll(".element__remove-button");
+// delete card
+// const removeCardButton = document.querySelector(".element__remove-button");
 
 // open
 const openEditPopupButton = document.querySelector(".profile__edit-button");
@@ -32,6 +34,7 @@ const profileDescription = document.querySelector(".profile__description");
 // templates
 const popupAddImageForm = document.forms["add-image"];
 const templateCard = document.querySelector(".template-element").content;
+const templateSpace = document.querySelector(".elements");
 const templateObject = {};
 
 const initialCards = [
@@ -113,21 +116,21 @@ function openModalWithButton(button) {
 //* ╚█████╔╝███████╗╚█████╔╝██████╔╝███████╗
 //*  ╚════╝ ╚══════╝ ╚════╝ ╚═════╝ ╚══════╝
 
-function closeModalWindow(elements) {
-  elements.forEach((el) => {
-    el.addEventListener("click", () => closeOnElement());
+function closeModalWindow(array) {
+  array.forEach((button) => {
+    button.addEventListener("click", () => closeOnElement());
   });
 }
 
 function closeOnElement() {
-  popups.forEach((e) => {
-    e.classList.remove("popup_opened");
-    checkForForm(e);
+  popups.forEach((element) => {
+    element.classList.remove("popup_opened");
+    checkForForm(element);
   });
 }
 
-function checkForForm(item) {
-  const childOfModal = item.firstElementChild;
+function checkForForm(element) {
+  const childOfModal = element.firstElementChild;
   if (childOfModal.nodeName === "FORM") {
     childOfModal.reset();
   }
@@ -140,10 +143,10 @@ function checkForForm(item) {
 //* ██████╔╝   ██║   ╚█████╔╝██║       ██║     ██║  ██║╚█████╔╝██║
 //* ╚═════╝    ╚═╝    ╚════╝ ╚═╝       ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝
 
-function stopProp(element) {
-  element.forEach((el) => {
-    el.addEventListener("click", (e) => {
-      e.stopPropagation();
+function stopProp(array) {
+  array.forEach((element) => {
+    element.addEventListener("click", (item) => {
+      item.stopPropagation();
     });
   });
 }
@@ -163,8 +166,8 @@ function placeholderInitialValue(form) {
 }
 
 function editProfile(form) {
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  form.addEventListener("submit", (element) => {
+    element.preventDefault();
     const name = form.name.value;
     const description = form.description.value;
     form.name.placeholder = name;
@@ -184,8 +187,8 @@ function editProfile(form) {
 //* ╚═╝  ╚═╝╚═════╝ ╚═════╝   ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
 
 function addImage(form, object) {
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  form.addEventListener("submit", (element) => {
+    element.preventDefault();
     object["title"] = form.title.value;
     object["link"] = form.link.value;
     form.offsetParent.classList.remove("popup_opened");
@@ -200,14 +203,31 @@ function addCard(object) {
     .cloneNode(true);
   const templateImage = templateElement.querySelector(".element__image");
   const templateTitle = templateElement.querySelector(".element__title");
-  const templateSpace = document.querySelector(".elements");
   const templateLike = templateElement.querySelector(".element__like-button");
+  const templateRemove = templateElement.querySelector(
+    ".element__remove-button"
+  );
 
   templateImage.src = object["link"];
   templateImage.alt = object["title"];
   templateTitle.textContent = object["title"];
   templateSpace.prepend(templateElement);
   toggleLikeButton(templateLike);
+  removeCard(templateRemove);
+  console.log(object);
+}
+
+//* ██████╗ ███████╗███╗   ███╗ █████╗ ██╗   ██╗███████╗
+//* ██╔══██╗██╔════╝████╗ ████║██╔══██╗██║   ██║██╔════╝
+//* ██████╔╝█████╗  ██╔████╔██║██║  ██║╚██╗ ██╔╝█████╗
+//* ██╔══██╗██╔══╝  ██║╚██╔╝██║██║  ██║ ╚████╔╝ ██╔══╝
+//* ██║  ██║███████╗██║ ╚═╝ ██║╚█████╔╝  ╚██╔╝  ███████╗
+//* ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝ ╚════╝    ╚═╝   ╚══════╝
+
+function removeCard(button) {
+  button.addEventListener("click", () => {
+    button.parentElement.remove();
+  });
 }
 
 //!  █████╗  █████╗ ██╗     ██╗      ██████╗
