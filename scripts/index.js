@@ -5,12 +5,6 @@
 //! ╚█████╔╝╚█████╔╝██║ ╚███║██████╔╝   ██║   ██║  ██║██║ ╚███║   ██║   ██████╔╝
 //!  ╚════╝  ╚════╝ ╚═╝  ╚══╝╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚══╝   ╚═╝   ╚═════╝
 
-// likes removes
-// const likeButtons = document.querySelectorAll(".element__like-button");
-const removeButtons = document.querySelectorAll(".element__remove-button");
-// delete card
-// const removeCardButton = document.querySelector(".element__remove-button");
-
 // open
 const openEditPopupButton = document.querySelector(".profile__edit-button");
 const openAddPopupButton = document.querySelector(".profile__add-button");
@@ -98,9 +92,6 @@ function toggleLikeButton(item) {
 //* ╚█████╔╝██║     ███████╗██║ ╚███║
 //*  ╚════╝ ╚═╝     ╚══════╝╚═╝  ╚══╝
 
-// определение коллекции, каждый элемент которой должен получить необходимый датасет
-// const openPreviewButtons = document.querySelectorAll(".element__picture");
-
 function openModalWithButton(button) {
   const modalWindow = document.querySelector(button.dataset.open);
   button.addEventListener("click", () => {
@@ -122,6 +113,7 @@ function closeModalWindow(array) {
   });
 }
 
+// for each element remove class
 function closeOnElement() {
   popups.forEach((element) => {
     element.classList.remove("popup_opened");
@@ -129,6 +121,7 @@ function closeOnElement() {
   });
 }
 
+// chek for form, if its form than reset it
 function checkForForm(element) {
   const childOfModal = element.firstElementChild;
   if (childOfModal.nodeName === "FORM") {
@@ -158,23 +151,19 @@ function stopProp(array) {
 //* ███████╗██████╔╝██║   ██║     ██║     ╚█████╔╝██║     ╚██████╔╝██║
 //* ╚══════╝╚═════╝ ╚═╝   ╚═╝     ╚═╝      ╚════╝ ╚═╝      ╚═════╝ ╚═╝
 
+// get values for the holder
 function placeholderInitialValue(form) {
-  const name = profileName.textContent;
-  const description = profileDescription.textContent;
-  form.name.placeholder = name;
-  form.description.placeholder = description;
+  form.name.placeholder = profileName.textContent; // it might be form.name.value but i dont want it that way
+  form.description.placeholder = profileDescription.textContent; // same here
 }
 
 function editProfile(form) {
   form.addEventListener("submit", (element) => {
-    element.preventDefault();
-    const name = form.name.value;
-    const description = form.description.value;
-    form.name.placeholder = name;
-    form.description.placeholder = description;
-    profileName.textContent = name;
-    profileDescription.textContent = description;
+    form.name.placeholder, profileName.textContent = form.name.value;
+    form.description.placeholder, profileDescription.textContent = form.description.value;
+
     form.offsetParent.classList.remove("popup_opened");
+    element.preventDefault();
     form.reset();
   });
 }
@@ -186,17 +175,20 @@ function editProfile(form) {
 //* ██║  ██║██████╔╝██████╔╝  ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
 //* ╚═╝  ╚═╝╚═════╝ ╚═════╝   ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
 
+// get values from form, put this values to object, then transfer that object to the next fn
 function addImage(form, object) {
   form.addEventListener("submit", (element) => {
-    element.preventDefault();
     object["title"] = form.title.value;
     object["link"] = form.link.value;
-    form.offsetParent.classList.remove("popup_opened");
+
     addCard(object);
+    form.offsetParent.classList.remove("popup_opened");
+    element.preventDefault();
     form.reset();
   });
 }
 
+// determine template elements and put values from object to requared places
 function addCard(object) {
   const templateElement = templateCard
     .querySelector(".element")
@@ -204,17 +196,16 @@ function addCard(object) {
   const templateImage = templateElement.querySelector(".element__image");
   const templateTitle = templateElement.querySelector(".element__title");
   const templateLike = templateElement.querySelector(".element__like-button");
-  const templateRemove = templateElement.querySelector(
-    ".element__remove-button"
-  );
+  const templateRemove = templateElement.querySelector(".element__remove-button");
 
   templateImage.src = object["link"];
   templateImage.alt = object["title"];
   templateTitle.textContent = object["title"];
+
   templateSpace.prepend(templateElement);
   toggleLikeButton(templateLike);
   removeCard(templateRemove);
-  console.log(object);
+  openPreview(templateImage);
 }
 
 //* ██████╗ ███████╗███╗   ███╗ █████╗ ██╗   ██╗███████╗
@@ -228,6 +219,15 @@ function removeCard(button) {
   button.addEventListener("click", () => {
     button.parentElement.remove();
   });
+}
+
+const popupPreview = document.querySelector()
+
+function openPreview (button) {
+  button.addEventListener("click" ,() => {
+    console.dir()
+    .classList.add("popup_opened");
+  })
 }
 
 //!  █████╗  █████╗ ██╗     ██╗      ██████╗
