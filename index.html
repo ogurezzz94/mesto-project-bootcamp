@@ -21,44 +21,13 @@
         <img src="images/examples/ava.jpg" alt="аватар" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name" data-profile="name">Александр Огурцов</h1>
-          <!-- data-btn="edit" -->
-          <button class="profile__edit-button" type="submit" aria-label="Редактировать профиль" data-btn="editPopupToggle"></button>
+          <button class="profile__edit-button" type="button" aria-label="Редактировать профиль" data-open=".popup_action_edit-profile"></button>
           <p class="profile__description" data-profile="description">ученик на "Яндекс Практикум" по программе frontend-разработчик</p>
         </div>
-        <button class="profile__add-button" type="submit" aria-label="Добавить изображения"></button>
+        <button class="profile__add-button" type="button" aria-label="Добавить изображения" data-open=".popup_action_add-image"></button>
       </section>
 
       <section class="elements" aria-label="Фотографии">
-        <article class="element">
-          <img src="images/examples/spb.jpg" alt="Санкт-Петербург" class="element__picture">
-          <h2 class="element__title">Санкт-Петербург</h2>
-          <button class="element__like-button" type="submit" aria-label="Сердечко"></button>
-        </article>
-        <article class="element">
-          <img src="images/examples/karachayevsk.jpg" alt="Карачаевск" class="element__picture">
-          <h2 class="element__title">Карачаевск</h2>
-          <button class="element__like-button" type="submit" aria-label="Сердечко"></button>
-        </article>
-        <article class="element">
-          <img src="images/examples/elbrus.jpg" alt="Гора Эльбрус" class="element__picture">
-          <h2 class="element__title">Гора Эльбрус</h2>
-          <button class="element__like-button" type="submit" aria-label="Сердечко"></button>
-        </article>
-        <article class="element">
-          <img src="images/examples/dombay.jpg" alt="Домбай" class="element__picture">
-          <h2 class="element__title">Домбай</h2>
-          <button class="element__like-button" type="submit" aria-label="Сердечко"></button>
-        </article>
-        <article class="element">
-          <img src="images/examples/ural.jpg" alt="Урал" class="element__picture">
-          <h2 class="element__title">Урал</h2>
-          <button class="element__like-button" type="submit" aria-label="Сердечко"></button>
-        </article>
-        <article class="element">
-          <img src="images/examples/ekaterinburg.jpg" alt="Екатеринбург" class="element__picture">
-          <h2 class="element__title">Екатеринбург</h2>
-          <button class="element__like-button" type="submit" aria-label="Сердечко"></button>
-        </article>
       </section>
     </main>
 
@@ -66,10 +35,9 @@
       <p class="footer__copyright">© 2023 Mesto Russia</p>
     </footer>
 
-    <div class="popup" data-popup="editProfile" data-btn="editPopupToggle">
-      <form class="popup__container" name="editProfile" method="get">
-        <!-- data-btn="closePopup" -->
-        <button class="popup__close-button" type="reset" aria-label="Крестик" data-btn="editPopupToggle"></button>
+    <div class="popup popup_action_edit-profile">
+      <form class="popup__container" name="edit-profile" method="get">
+        <button class="popup__close-button" type="reset" aria-label="Крестик"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <input class="popup__field popup__field_input_name" placeholder="Имя" name="name" type="text" required autocomplete="off">
         <input class="popup__field popup__field_input_description" placeholder="Описание" name="description" type="text" required autocomplete="off">
@@ -77,6 +45,35 @@
       </form>
     </div>
 
+    <div class="popup popup_action_add-image">
+      <form class="popup__container" name="add-image" method="get">
+        <button class="popup__close-button" type="reset" aria-label="Крестик"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <input class="popup__field popup__field_input_title" placeholder="Название" name="title" type="text" required autocomplete="off">
+        <input class="popup__field popup__field_input_link" placeholder="Ссылка на изображение" name="link" type="text" required autocomplete="off">
+        <button class="popup__submit-button" type="submit" aria-label="Сохранить">Сохранить</button>
+      </form>
+    </div>
+
+    <div class="popup popup_action_preview">
+
+      <figure class="popup__figure">
+        <button class="popup__close-button" type="button"></button>
+        <img src="" alt="Предпросмотр" class="popup__image">
+        <figcaption class="popup__image-description"></figcaption>
+      </figure>
+    </div>
+
   </div>
+
+  <template class="template-element">
+    <article class="element">
+      <button class="element__remove-button" type="button"></button>
+      <img src="" alt="" class="element__image">
+      <h2 class="element__title"></h2>
+      <button class="element__like-button" type="button" aria-label="Сердечко"></button>
+    </article>
+  </template>
+
 </body>
 </html>

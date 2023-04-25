@@ -4,6 +4,6 @@
 
 * [X] БЕМ-архитектура
 * [X] Отзывчивая верстка
-* [ ] JavaScript
+* [X] JavaScript
 
 ### Сам проект на[ Github Pages](https://ogurezzz94.github.io/mesto-project-bootcamp/)

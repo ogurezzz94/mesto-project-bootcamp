@@ -1,0 +1,6 @@
+.popup_action_preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
+}

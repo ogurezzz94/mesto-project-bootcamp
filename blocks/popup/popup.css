@@ -12,19 +12,19 @@
   grid-template-columns: minmax(19px, 1fr) minmax(auto, 430px) minmax(19px, 1fr);
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
-    ". . cross"
+    ". . ."
     ". input ."
     ". . .";
 
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s,  opacity 0.2s linear;
+  transition: visibility 0s, opacity 0.5s;
 }
 
 @media (max-width: 767px) {
   .popup {
     grid-template-areas:
-      ". cross ."
+      ". . ."
       ". input ."
       ". . .";
   }
