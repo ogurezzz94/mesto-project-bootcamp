@@ -4,7 +4,7 @@
   "description": "* [X] БЕМ-архитектура\r * [X] Отзывчивая верстка\r * [X] JavaScript",
   "main": "index.js",
   "scripts": {
-    "build": "rd /s /q dist && webpack",
+    "build": "webpack --mode production",
     "dev": "webpack serve"
   },
   "author": "",
@@ -13,7 +13,10 @@
     "@babel/core": "^7.21.5",
     "@babel/preset-env": "^7.21.5",
     "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.3",
     "html-webpack-plugin": "^5.5.1",
+    "mini-css-extract-plugin": "^2.7.5",
     "webpack": "^5.81.0",
     "webpack-cli": "^5.0.2",
     "webpack-dev-server": "^4.13.3"
