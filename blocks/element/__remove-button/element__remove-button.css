@@ -8,10 +8,11 @@
 
   border: none;
   background-color: transparent;
-  background-image: url(../../../../images/icons/Trash.svg);
+  background-image: url(../../../images/icons/trash.svg);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100%;
+  background-size: contain;
+
   transition: opacity 0.2s;
   opacity: 0;
   filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));

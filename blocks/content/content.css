@@ -2,6 +2,8 @@
   width: 100%;
   max-width: 880px;
   padding: 0 0 66px;
+
+  flex: auto;
 }
 
 @media (max-width: 767px) {

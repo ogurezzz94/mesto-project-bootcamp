@@ -10,7 +10,7 @@
   background-image: url(../../../images/icons/like.svg);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100%;
+  background-size: contain;
   transition: opacity 0.2s;
 }
 
