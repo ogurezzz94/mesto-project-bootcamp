@@ -129,6 +129,7 @@ function closeOnElement() {
 }
 
 // chek for form, if its form than reset it
+// element.queryselector("form")
 function checkForForm(element) {
   const childOfModal = element.firstElementChild;
   if (childOfModal.nodeName === "FORM") {
