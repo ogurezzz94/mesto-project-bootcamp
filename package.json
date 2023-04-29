@@ -1,0 +1,22 @@
+{
+  "name": "mesto-project-bootcamp",
+  "version": "1.0.0",
+  "description": "* [X] БЕМ-архитектура\r * [X] Отзывчивая верстка\r * [X] JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "build": "rd /s /q dist && webpack",
+    "dev": "webpack serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.21.5",
+    "@babel/preset-env": "^7.21.5",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  },
+  "dependencies": {
+    "core-js": "^3.30.1"
+  }
+}
