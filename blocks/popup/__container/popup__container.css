@@ -1,4 +1,5 @@
 .popup__container {
+  /* height: 330px; */
   grid-area: input;
   position: relative;
 
