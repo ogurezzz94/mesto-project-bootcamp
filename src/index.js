@@ -1,4 +1,4 @@
-console.log('Hello, World!')
+console.log('webpack build');
 import '../pages/index.css';
 
 
