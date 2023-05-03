@@ -1,5 +1,5 @@
 .popup__form-error {
-  margin: 0 0 13px;
+  margin: 5px 0 0;
 
   font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
@@ -9,3 +9,7 @@
 
   color: #ff0000;
 }
+
+/* .popup__form-error:first-of-type {
+  margin: 5px 0 13px;
+} */

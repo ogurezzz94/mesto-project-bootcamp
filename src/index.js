@@ -1,17 +1,21 @@
-console.log('webpack build');
-import '../pages/index.css';
+console.log("webpack build");
+import "../pages/index.css";
 
+const profileEditButton = document.querySelector(".profile__edit-button");
+const profileEditPopup = document.querySelector(".popup_action_edit-profile");
+const profileEditForm = document.forms["edit-profile"];
 
-//!  █████╗  █████╗ ███╗  ██╗ ██████╗████████╗ █████╗ ███╗  ██╗████████╗ ██████╗
-//! ██╔══██╗██╔══██╗████╗ ██║██╔════╝╚══██╔══╝██╔══██╗████╗ ██║╚══██╔══╝██╔════╝
-//! ██║  ╚═╝██║  ██║██╔██╗██║╚█████╗    ██║   ███████║██╔██╗██║   ██║   ╚█████╗
-//! ██║  ██╗██║  ██║██║╚████║ ╚═══██╗   ██║   ██╔══██║██║╚████║   ██║    ╚═══██╗
-//! ╚█████╔╝╚█████╔╝██║ ╚███║██████╔╝   ██║   ██║  ██║██║ ╚███║   ██║   ██████╔╝
-//!  ╚════╝  ╚════╝ ╚═╝  ╚══╝╚═════╝    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚══╝   ╚═╝   ╚═════╝
+const profileName = document.querySelector(".profile__name");
+const profileDescription = document.querySelector(".profile__description");
+
+const imageAddButton = document.querySelector(".profile__add-button");
+const imageAddPopup = document.querySelector(".popup_action_add-image");
+const imageAddForm = document.forms["add-image"];
 
 // open
-const openEditPopupButton = document.querySelector(".profile__edit-button");
-const openAddPopupButton = document.querySelector(".profile__add-button");
+// const openEditPopupButton = document.querySelector(".profile__edit-button");
+// const openAddPopupButton = document.querySelector(".profile__add-button");
+
 const popups = document.querySelectorAll(".popup");
 
 // close
@@ -32,9 +36,9 @@ const popupImageDescription = popupPreview.querySelector(
 );
 
 // open modals
-const popupEditProfileForm = document.forms["edit-profile"];
-const profileName = document.querySelector(".profile__name");
-const profileDescription = document.querySelector(".profile__description");
+// const popupEditProfileForm = document.forms["edit-profile"];
+// const profileName = document.querySelector(".profile__name");
+// const profileDescription = document.querySelector(".profile__description");
 
 // templates
 const popupAddImageForm = document.forms["add-image"];
@@ -76,47 +80,50 @@ const objectCards = initialCards.map(function (item) {
   };
 });
 
-//* ██╗     ██╗██╗  ██╗███████╗  ██████╗ ██╗   ██╗████████╗████████╗ █████╗ ███╗  ██╗ ██████╗
-//* ██║     ██║██║ ██╔╝██╔════╝  ██╔══██╗██║   ██║╚══██╔══╝╚══██╔══╝██╔══██╗████╗ ██║██╔════╝
-//* ██║     ██║█████═╝ █████╗    ██████╦╝██║   ██║   ██║      ██║   ██║  ██║██╔██╗██║╚█████╗
-//* ██║     ██║██╔═██╗ ██╔══╝    ██╔══██╗██║   ██║   ██║      ██║   ██║  ██║██║╚████║ ╚═══██╗
-//* ███████╗██║██║ ╚██╗███████╗  ██████╦╝╚██████╔╝   ██║      ██║   ╚█████╔╝██║ ╚███║██████╔╝
-//* ╚══════╝╚═╝╚═╝  ╚═╝╚══════╝  ╚═════╝  ╚═════╝    ╚═╝      ╚═╝    ╚════╝ ╚═╝  ╚══╝╚═════╝
+// modal window
 
-function toggleLikeButton(item) {
-  item.addEventListener("click", () => {
-    item.classList.toggle("element__like-button_enabled");
-  });
+// open
+
+function openPopup(element) {
+  element.classList.add("popup_opened");
 }
 
-//! ███╗   ███╗ █████╗ ██████╗  █████╗ ██╗        ██╗       ██╗██╗███╗  ██╗██████╗  █████╗  ██╗       ██╗ ██████╗
-//! ████╗ ████║██╔══██╗██╔══██╗██╔══██╗██║        ██║  ██╗  ██║██║████╗ ██║██╔══██╗██╔══██╗ ██║  ██╗  ██║██╔════╝
-//! ██╔████╔██║██║  ██║██║  ██║███████║██║        ╚██╗████╗██╔╝██║██╔██╗██║██║  ██║██║  ██║ ╚██╗████╗██╔╝╚█████╗
-//! ██║╚██╔╝██║██║  ██║██║  ██║██╔══██║██║         ████╔═████║ ██║██║╚████║██║  ██║██║  ██║  ████╔═████║  ╚═══██╗
-//! ██║ ╚═╝ ██║╚█████╔╝██████╔╝██║  ██║███████╗    ╚██╔╝ ╚██╔╝ ██║██║ ╚███║██████╔╝╚█████╔╝  ╚██╔╝ ╚██╔╝ ██████╔╝
-//! ╚═╝     ╚═╝ ╚════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝     ╚═╝   ╚═╝  ╚═╝╚═╝  ╚══╝╚═════╝  ╚════╝    ╚═╝   ╚═╝  ╚═════╝
-
-//*  █████╗ ██████╗ ███████╗███╗  ██╗
-//* ██╔══██╗██╔══██╗██╔════╝████╗ ██║
-//* ██║  ██║██████╔╝█████╗  ██╔██╗██║
-//* ██║  ██║██╔═══╝ ██╔══╝  ██║╚████║
-//* ╚█████╔╝██║     ███████╗██║ ╚███║
-//*  ╚════╝ ╚═╝     ╚══════╝╚═╝  ╚══╝
-
-function openModalWithButton(button) {
-  const modalWindow = document.querySelector(button.dataset.open);
+function openPopupByButton(button, element) {
   button.addEventListener("click", () => {
-    initialValue(popupEditProfileForm);
-    modalWindow.classList.add("popup_opened");
+    openPopup(element);
   });
 }
 
-//*  █████╗ ██╗      █████╗  ██████╗███████╗
-//* ██╔══██╗██║     ██╔══██╗██╔════╝██╔════╝
-//* ██║  ╚═╝██║     ██║  ██║╚█████╗ █████╗
-//* ██║  ██╗██║     ██║  ██║ ╚═══██╗██╔══╝
-//* ╚█████╔╝███████╗╚█████╔╝██████╔╝███████╗
-//*  ╚════╝ ╚══════╝ ╚════╝ ╚═════╝ ╚══════╝
+function resetFormByButton(button, form) {
+  button.addEventListener("click", () => {
+    form.reset();
+  });
+}
+
+function openFormWithReset(button, element, form) {
+  resetFormByButton(button, form);
+  openPopupByButton(button, element);
+}
+openFormWithReset(imageAddButton, imageAddPopup, imageAddForm);
+
+function setInitialValues(button, form) {
+  button.addEventListener("click", () => {
+    form.name.value = profileName.textContent;
+    form.description.value = profileDescription.textContent;
+  });
+}
+
+function openFormWithValues(button, element, form) {
+  openFormWithReset(button, element, form);
+  setInitialValues(button, form);
+}
+openFormWithValues(profileEditButton, profileEditPopup, profileEditForm);
+
+// close
+
+function closePopup(element) {
+  element.classList.remove("popup_opened");
+}
 
 function closeModalWindow(array) {
   array.forEach((button) => {
@@ -127,26 +134,22 @@ function closeModalWindow(array) {
 // for each element remove class
 function closeOnElement() {
   popups.forEach((element) => {
-    element.classList.remove("popup_opened");
-    checkForForm(element);
+    closePopup(element);
   });
 }
 
-// chek for form, if its form than reset it
-// element.queryselector("form")
-function checkForForm(element) {
-  const childOfModal = element.firstElementChild;
-  if (childOfModal.nodeName === "FORM") {
-    childOfModal.reset();
-  }
+function closeOnEscape(item) {
+  document.body.addEventListener("keyup", function (event) {
+    if (event.key === "Escape") {
+      item.forEach((element) => {
+        closePopup(element);
+      });
+    }
+  });
 }
+closeOnEscape(popups);
 
-//*  ██████╗████████╗ █████╗ ██████╗   ██████╗ ██████╗  █████╗ ██████╗
-//* ██╔════╝╚══██╔══╝██╔══██╗██╔══██╗  ██╔══██╗██╔══██╗██╔══██╗██╔══██╗
-//* ╚█████╗    ██║   ██║  ██║██████╔╝  ██████╔╝██████╔╝██║  ██║██████╔╝
-//*  ╚═══██╗   ██║   ██║  ██║██╔═══╝   ██╔═══╝ ██╔══██╗██║  ██║██╔═══╝
-//* ██████╔╝   ██║   ╚█████╔╝██║       ██║     ██║  ██║╚█████╔╝██║
-//* ╚═════╝    ╚═╝    ╚════╝ ╚═╝       ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝
+//  stop prop
 
 function stopProp(array) {
   array.forEach((element) => {
@@ -156,36 +159,19 @@ function stopProp(array) {
   });
 }
 
-//* ███████╗██████╗ ██╗████████╗  ██████╗  █████╗ ██████╗ ██╗   ██╗██████╗
-//* ██╔════╝██╔══██╗██║╚══██╔══╝  ██╔══██╗██╔══██╗██╔══██╗██║   ██║██╔══██╗
-//* █████╗  ██║  ██║██║   ██║     ██████╔╝██║  ██║██████╔╝██║   ██║██████╔╝
-//* ██╔══╝  ██║  ██║██║   ██║     ██╔═══╝ ██║  ██║██╔═══╝ ██║   ██║██╔═══╝
-//* ███████╗██████╔╝██║   ██║     ██║     ╚█████╔╝██║     ╚██████╔╝██║
-//* ╚══════╝╚═════╝ ╚═╝   ╚═╝     ╚═╝      ╚════╝ ╚═╝      ╚═════╝ ╚═╝
-
-// get values for the holder
-function initialValue(form) {
-  form.name.value = profileName.textContent;
-  form.description.value = profileDescription.textContent;
-}
+// edit popup
 
 function editProfile(form) {
   form.addEventListener("submit", (element) => {
     profileName.textContent = form.name.value;
     profileDescription.textContent = form.description.value;
-
-    form.offsetParent.classList.remove("popup_opened");
+    closePopup(form.offsetParent);
     element.preventDefault();
     form.reset();
   });
 }
 
-//*  █████╗ ██████╗ ██████╗   ██╗███╗   ███╗ █████╗  ██████╗ ███████╗
-//* ██╔══██╗██╔══██╗██╔══██╗  ██║████╗ ████║██╔══██╗██╔════╝ ██╔════╝
-//* ███████║██║  ██║██║  ██║  ██║██╔████╔██║███████║██║  ██╗ █████╗
-//* ██╔══██║██║  ██║██║  ██║  ██║██║╚██╔╝██║██╔══██║██║  ╚██╗██╔══╝
-//* ██║  ██║██████╔╝██████╔╝  ██║██║ ╚═╝ ██║██║  ██║╚██████╔╝███████╗
-//* ╚═╝  ╚═╝╚═════╝ ╚═════╝   ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝
+// add image
 
 // get values from form, put this values to object, then transfer that object to the next fn
 function addImage(form, object) {
@@ -194,40 +180,44 @@ function addImage(form, object) {
     object["link"] = form.link.value;
 
     addCard(object);
-    form.offsetParent.classList.remove("popup_opened");
+    closePopup(form.offsetParent);
     element.preventDefault();
     form.reset();
   });
 }
 
-// determine template elements and put values from object to requared places
-function addCard(object) {
+function createCard(object) {
   const templateElement = templateCard
     .querySelector(".element")
     .cloneNode(true);
   const templateImage = templateElement.querySelector(".element__image");
-  const templateTitle = templateElement.querySelector(".element__title");
-  const templateLike = templateElement.querySelector(".element__like-button");
-  const templateRemove = templateElement.querySelector(
-    ".element__remove-button"
-  );
-
   templateImage.src = object["link"];
   templateImage.alt = object["title"];
+  const templateTitle = templateElement.querySelector(".element__title");
   templateTitle.textContent = object["title"];
 
-  templateSpace.prepend(templateElement);
-  toggleLikeButton(templateLike);
-  removeCard(templateRemove);
-  openPreview(templateImage);
+  return templateElement;
 }
 
-//* ██████╗ ███████╗███╗   ███╗ █████╗ ██╗   ██╗███████╗
-//* ██╔══██╗██╔════╝████╗ ████║██╔══██╗██║   ██║██╔════╝
-//* ██████╔╝█████╗  ██╔████╔██║██║  ██║╚██╗ ██╔╝█████╗
-//* ██╔══██╗██╔══╝  ██║╚██╔╝██║██║  ██║ ╚████╔╝ ██╔══╝
-//* ██║  ██║███████╗██║ ╚═╝ ██║╚█████╔╝  ╚██╔╝  ███████╗
-//* ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝ ╚════╝    ╚═╝   ╚══════╝
+// determine template elements and put values from object to requared places
+function addCard(object) {
+  const card = createCard(object);
+  toggleLikeButton(card.querySelector(".element__like-button"));
+  removeCard(card.querySelector(".element__remove-button"));
+  openPreview(card.querySelector(".element__image"));
+
+  templateSpace.prepend(card);
+}
+
+// like btns
+
+function toggleLikeButton(item) {
+  item.addEventListener("click", () => {
+    item.classList.toggle("element__like-button_enabled");
+  });
+}
+
+// remove card
 
 function removeCard(button) {
   button.addEventListener("click", () => {
@@ -235,34 +225,21 @@ function removeCard(button) {
   });
 }
 
-//* ██████╗ ██████╗ ███████╗██╗   ██╗██╗███████╗ ██╗       ██╗
-//* ██╔══██╗██╔══██╗██╔════╝██║   ██║██║██╔════╝ ██║  ██╗  ██║
-//* ██████╔╝██████╔╝█████╗  ╚██╗ ██╔╝██║█████╗   ╚██╗████╗██╔╝
-//* ██╔═══╝ ██╔══██╗██╔══╝   ╚████╔╝ ██║██╔══╝    ████╔═████║
-//* ██║     ██║  ██║███████╗  ╚██╔╝  ██║███████╗  ╚██╔╝ ╚██╔╝
-//* ╚═╝     ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝╚══════╝   ╚═╝   ╚═╝
+// prewview
 
 function openPreview(item) {
   item.addEventListener("click", () => {
     popupImage.src = item.src;
+    popupImage.alt = item.alt;
     popupImageDescription.textContent = item.alt;
-    popupPreview.classList.add("popup_opened");
+    openPopup(popupPreview);
   });
 }
 
-//!  █████╗  █████╗ ██╗     ██╗      ██████╗
-//! ██╔══██╗██╔══██╗██║     ██║     ██╔════╝
-//! ██║  ╚═╝███████║██║     ██║     ╚█████╗
-//! ██║  ██╗██╔══██║██║     ██║      ╚═══██╗
-//! ╚█████╔╝██║  ██║███████╗███████╗██████╔╝
-//!  ╚════╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═════╝
+// calls
 
 // render initial
 objectCards.forEach(addCard);
-
-// open forms
-openModalWithButton(openEditPopupButton);
-openModalWithButton(openAddPopupButton);
 
 // close modals
 closeModalWindow(closePopupElements);
@@ -271,7 +248,7 @@ closeModalWindow(closePopupElements);
 stopProp(modalWindows);
 
 // submit for edit
-editProfile(popupEditProfileForm);
+editProfile(profileEditForm);
 
 // submit for add
 addImage(popupAddImageForm, templateObject);
