@@ -42,3 +42,7 @@
 @import url(../blocks/popup/__figure/popup__figure.css);
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__image-description/popup__image-description.css);
+
+.form__field_input_error {
+  background-color: red;
+}

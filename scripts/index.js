@@ -249,3 +249,41 @@ editProfile(profileEditForm);
 
 // submit for add
 addImage(popupAddImageForm, templateObject);
+
+// profileEditForm
+const inputName = document.querySelector(".popup__field_input_name");
+
+const formError = (input) => {
+  return (formErrorMessage = document.querySelector(
+    `${input.dataset.message}`
+  ));
+};
+// console.log(formError(inputName))
+
+function validation(input) {
+  input.addEventListener("input", () => {
+    checkInputValidation(input);
+  });
+}
+validation(inputName);
+
+function showError(input, message) {
+  input.classList.add("form__field_input_error");
+    // formError(input).classList.add("error_show");
+  formError(input).textContent = message;
+}
+
+function hideError(input) {
+  input.classList.remove("form__field_input_error");
+  // formError(input).classList.remove("error_show");
+  formError(input).textContent = "";
+}
+
+function checkInputValidation(input) {
+  if (!input.validity.valid) {
+    showError(input, input.validationMessage);
+    console.dir(input);
+  } else {
+    hideError(input);
+  }
+}
