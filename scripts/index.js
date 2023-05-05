@@ -251,7 +251,10 @@ editProfile(profileEditForm);
 addImage(popupAddImageForm, templateObject);
 
 // profileEditForm
+
 const inputName = document.querySelector(".popup__field_input_name");
+const submitButton = document.querySelector(".popup__submit-button");
+
 
 const formError = (input) => {
   return (formErrorMessage = document.querySelector(
@@ -260,30 +263,40 @@ const formError = (input) => {
 };
 // console.log(formError(inputName))
 
-function validation(input) {
-  input.addEventListener("input", () => {
-    checkInputValidation(input);
-  });
+function disableButton(button) {
+  button.disabled = true;
+  button.classList.add("popup__submit-button_disabled");
 }
-validation(inputName);
+function enableButton(button) {
+  button.disabled = false;
+  button.classList.remove("popup__submit-button_disabled");
+}
+
 
 function showError(input, message) {
   input.classList.add("form__field_input_error");
-    // formError(input).classList.add("error_show");
+  // formError(input).classList.add("error_show");
   formError(input).textContent = message;
 }
-
 function hideError(input) {
   input.classList.remove("form__field_input_error");
   // formError(input).classList.remove("error_show");
   formError(input).textContent = "";
 }
 
-function checkInputValidation(input) {
+function checkInputValidation(input, button) {
   if (!input.validity.valid) {
     showError(input, input.validationMessage);
-    console.dir(input);
+    disableButton(button);
   } else {
     hideError(input);
+    enableButton(button);
   }
 }
+
+function onValidInput(input, button) {
+  input.addEventListener("input", () => {
+    checkInputValidation(input, button);
+  });
+}
+validation(inputName, submitButton);
