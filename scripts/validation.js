@@ -1,69 +1,100 @@
-const showInputError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('form__input_type_error');
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add('form__input-error_active');
-};
 
-const showInputError2 = (formEl, inputEl, errorMassage) => {
-  const errorEl = formElement.querySelector(`${inputElement.classList[0]}-error`);
+// profileEditForm
+const alpha = "popup__submit-button"
+console.dir(profileEditForm.querySelector(`button.${alpha}`))
+
+const inputName = document.querySelector(".popup__field_input_name");
+const submitButton = document.querySelector(".popup__submit-button");
+
+
+// const formError = (input) => {
+//   return (formErrorMessage = document.querySelector(
+//     `${input.dataset.message}`
+//   ));
+// };
+// console.log(formError(inputName))
+
+function disableButton(button) {
+  button.disabled = true;
+  button.classList.add("popup__submit-button_disabled");
+}
+function enableButton(button) {
+  button.disabled = false;
+  button.classList.remove("popup__submit-button_disabled");
 }
 
-const hideInputError = (formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('form__input_type_error');
-  errorElement.classList.remove('form__input-error_active');
-  errorElement.textContent = '';
-};
 
-const checkInputValidity = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+// function showError(input, message, errorClass) {
+//   input.classList.add(errorClass);
+//   const msg = input.nextSibling;
+//   msg.classList.has()
+//   .textContent = message;
+// }
+
+// function hideError(input, errorClass) {
+//   input.classList.remove(errorClass);
+//   input.nextSibling.textContent = "";
+// }
+
+function checkInputValidation(input, { inputErrorClass, messageErrorClass }) {
+  const msg = input.nextElementSibling;
+  const message = input.validationMessage;
+  const isMsg = msg.classList.contains(messageErrorClass);
+  console.log(isMsg, input.validity.valid, message);
+  if (isMsg && input.validity.valid) {
+    input.classList.remove(inputErrorClass);
+    msg.textContent = "";
+  } else if (isMsg && !input.validity.valid) {
+    input.classList.add(inputErrorClass);
+    msg.textContent = message;
   } else {
-    hideInputError(formElement, inputElement);
-  }
-};
+    console.error('Missing error message element');
 
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.form__input'));
-    const buttonElement = formElement.querySelector('.form__submit');
-  toggleButtonState(inputList, buttonElement)
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement)
-    });
-  });
-};
-
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.form'));
-  formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    });
-    const fieldsetList = Array.from(formElement.querySelectorAll('.form__set'))
-    fieldsetList.forEach((el) => {
-      setEventListeners(el)
-    })
-
-
-  });
-};
-
-enableValidation();
-
-function hasInvalidInput (inputList) {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  })
-}
-
-function toggleButtonState (inputList, buttonElement) {
-  if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add('button_inactive')
-  } else {
-    buttonElement.classList.remove('button_inactive');
   }
 }
 
+
+function onValidInput(input, objClass) {
+  const form = input.closest('form');
+  const button = form.querySelector(objClass.submitButtonSelector);
+
+  input.addEventListener("input", (e) => {
+    // console.log('input', e);
+    checkInputValidation(input, objClass);
+
+    // if (form.reportValidity()) {
+    //   button.classList.remove(objClass.inactiveButtonClass);
+    //   button.disabled = true;
+    // } else {
+    //   button.classList.add(objClass.inactiveButtonClass);
+    //   button.disabled = false;
+    // }
+  });
+}
+
+function enableValidation(form, objClass) {
+  const inputs = form.querySelectorAll(objClass.inputSelector);
+  // const button = form.querySelector(objClass.submitButtonSelector);
+
+  inputs.forEach((el) => onValidInput(el, objClass));
+  // const valids = [];
+  // inputs.forEach((el) => valids.push(el.validity.valid));
+  // const formValidation = valids.every((v) => v);
+  // formValidation
+  //   ? button.classList.remove(inactiveButtonClass)
+  //   : button.classList.add(inactiveButtonClass);
+
+}
+
+enableValidation(profileEditForm, { inputSelector: '.popup__field', submitButtonSelector: '.popup__submit-button', inactiveButtonClass: 'popup__button_disabled', inputErrorClass: 'popup__field', messageErrorClass: 'popup__form-error' })
+
+// validation(inputName);
+
+// enableValidation({
+//   formSelector: '.popup__form', form
+//   inputSelector: '.popup__input', input
+//   submitButtonSelector: '.popup__button',
+//   inactiveButtonClass: 'popup__button_disabled',
+//   inputErrorClass: 'popup__input_type_error',
+//   errorClass: 'popup__error_visible'
+// });

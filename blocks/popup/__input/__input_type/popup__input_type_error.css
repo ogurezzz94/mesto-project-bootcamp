@@ -1,4 +1,9 @@
-.popup__form-error {
+.popup__input_type_error {
+  outline: 0;
+  border-bottom: 1px solid red;
+}
+
+.popup__field-error {
   margin: 5px 0 0;
 
   font-family: "Inter", "Arial", sans-serif;

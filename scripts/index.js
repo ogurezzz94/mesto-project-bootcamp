@@ -250,53 +250,58 @@ editProfile(profileEditForm);
 // submit for add
 addImage(popupAddImageForm, templateObject);
 
-// profileEditForm
+//
+//
+//
 
-const inputName = document.querySelector(".popup__field_input_name");
-const submitButton = document.querySelector(".popup__submit-button");
+// const form = document.querySelector(".form");
+// const formInput = form.querySelector(".form__input");
+// const formError = form.querySelector(`.${formInput.id}-error`);
 
-
-const formError = (input) => {
-  return (formErrorMessage = document.querySelector(
-    `${input.dataset.message}`
-  ));
+const showError = (obj, input, errorMessage) => {
+  const error = input.nextElementSibling;
+  input.classList.add(obj.inputErrorClass);
+  error.textContent = errorMessage;
 };
-// console.log(formError(inputName))
 
-function disableButton(button) {
-  button.disabled = true;
-  button.classList.add("popup__submit-button_disabled");
-}
-function enableButton(button) {
-  button.disabled = false;
-  button.classList.remove("popup__submit-button_disabled");
-}
+const hideError = (obj, input) => {
+  const error = input.nextElementSibling;
+  input.classList.remove(obj.inputErrorClass);
+  error.textContent = "";
+};
 
-
-function showError(input, message) {
-  input.classList.add("form__field_input_error");
-  // formError(input).classList.add("error_show");
-  formError(input).textContent = message;
-}
-function hideError(input) {
-  input.classList.remove("form__field_input_error");
-  // formError(input).classList.remove("error_show");
-  formError(input).textContent = "";
-}
-
-function checkInputValidation(input, button) {
+const checkInputValidity = (obj, input) => {
   if (!input.validity.valid) {
-    showError(input, input.validationMessage);
-    disableButton(button);
+    showError(obj, input, input.validationMessage);
   } else {
-    hideError(input);
-    enableButton(button);
+    hideError(obj, input);
   }
-}
+};
 
-function onValidInput(input, button) {
-  input.addEventListener("input", () => {
-    checkInputValidation(input, button);
+const setEventListeners = (form, obj) => {
+  const inputs = form.querySelectorAll(obj.inputSelector);
+  inputs.forEach((input) => {
+    input.addEventListener("input", function () {
+      checkInputValidity(obj, input);
+    });
+  });
+};
+
+function enableValidation(obj) {
+  const forms = document.querySelectorAll(obj.formSelector);
+  forms.forEach((form) => {
+    setEventListeners(form, obj);
   });
 }
-validation(inputName, submitButton);
+
+// enableValidation();
+
+enableValidation({
+  formSelector: ".popup__container", // form
+  inputSelector: ".popup__input", // input
+  submitButtonSelector: ".popup__submit-button", // button
+  inactiveButtonClass: "popup__submit-button_disabled", // button-disabled
+  inputErrorClass: "popup__input_type_error", // input error
+
+  errorClass: "popup__field-error", // error-span-shown
+});
