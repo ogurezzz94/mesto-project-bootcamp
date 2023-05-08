@@ -1,3 +1,15 @@
+import {
+  closeModalWindow,
+  closeOnEscape,
+  closeOnEscape,
+  stopProp,
+} from "./close-modal";
+
+import { editProfile } from "./edit-popup";
+import { addImage } from "./add-image";
+import { openFormWithReset, openFormWithValues } from "./open-modal";
+import { enableValidation } from "./validation";
+
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditPopup = document.querySelector(".popup_action_edit-profile");
 const profileEditForm = document.forms["edit-profile"];
@@ -79,163 +91,19 @@ const objectCards = initialCards.map(function (item) {
 
 // modal window
 
-// open
-
-function openPopup(element) {
-  element.classList.add("popup_opened");
-}
-
-function openPopupByButton(button, element) {
-  button.addEventListener("click", () => {
-    openPopup(element);
-  });
-}
-
-function resetFormByButton(button, form) {
-  button.addEventListener("click", () => {
-    form.reset();
-  });
-}
-
-function openFormWithReset(button, element, form) {
-  resetFormByButton(button, form);
-  openPopupByButton(button, element);
-}
-openFormWithReset(imageAddButton, imageAddPopup, imageAddForm);
-
-function setInitialValues(button, form) {
-  button.addEventListener("click", () => {
-    form.name.value = profileName.textContent;
-    form.description.value = profileDescription.textContent;
-  });
-}
-
-function openFormWithValues(button, element, form) {
-  openFormWithReset(button, element, form);
-  setInitialValues(button, form);
-}
-openFormWithValues(profileEditButton, profileEditPopup, profileEditForm);
-
 // close
-
-function closePopup(element) {
-  element.classList.remove("popup_opened");
-}
-
-function closeModalWindow(array) {
-  array.forEach((button) => {
-    button.addEventListener("click", () => closeOnElement());
-  });
-}
-
-// for each element remove class
-function closeOnElement() {
-  popups.forEach((element) => {
-    closePopup(element);
-  });
-}
-
-function closeOnEscape(item) {
-  document.body.addEventListener("keyup", function (event) {
-    if (event.key === "Escape") {
-      item.forEach((element) => {
-        closePopup(element);
-      });
-    }
-  });
-}
-closeOnEscape(popups);
 
 //  stop prop
 
-function stopProp(array) {
-  array.forEach((element) => {
-    element.addEventListener("click", (item) => {
-      item.stopPropagation();
-    });
-  });
-}
-
 // edit popup
 
-function editProfile(form) {
-  form.addEventListener("submit", (element) => {
-    profileName.textContent = form.name.value;
-    profileDescription.textContent = form.description.value;
-    closePopup(form.offsetParent);
-    element.preventDefault();
-    form.reset();
-  });
-}
-
-// add image
-
-// get values from form, put this values to object, then transfer that object to the next fn
-function addImage(form, object) {
-  form.addEventListener("submit", (element) => {
-    object["title"] = form.title.value;
-    object["link"] = form.link.value;
-
-    addCard(object);
-    closePopup(form.offsetParent);
-    element.preventDefault();
-    form.reset();
-  });
-}
-
-function createCard(object) {
-  const templateElement = templateCard
-    .querySelector(".element")
-    .cloneNode(true);
-  const templateImage = templateElement.querySelector(".element__image");
-  templateImage.src = object["link"];
-  templateImage.alt = object["title"];
-  const templateTitle = templateElement.querySelector(".element__title");
-  templateTitle.textContent = object["title"];
-
-  return templateElement;
-}
-
-// determine template elements and put values from object to requared places
-function addCard(object) {
-  const card = createCard(object);
-  toggleLikeButton(card.querySelector(".element__like-button"));
-  removeCard(card.querySelector(".element__remove-button"));
-  openPreview(card.querySelector(".element__image"));
-
-  templateSpace.prepend(card);
-}
-
-// like btns
-
-function toggleLikeButton(item) {
-  item.addEventListener("click", () => {
-    item.classList.toggle("element__like-button_enabled");
-  });
-}
-
-// remove card
-
-function removeCard(button) {
-  button.addEventListener("click", () => {
-    button.parentElement.remove();
-  });
-}
-
 // prewview
-
-function openPreview(item) {
-  item.addEventListener("click", () => {
-    popupImage.src = item.src;
-    popupImage.alt = item.alt;
-    popupImageDescription.textContent = item.alt;
-    openPopup(popupPreview);
-  });
-}
 
 // calls
 
 // render initial
+
+closeOnEscape(popups);
 objectCards.forEach(addCard);
 
 // close modals
@@ -251,57 +119,15 @@ editProfile(profileEditForm);
 addImage(popupAddImageForm, templateObject);
 
 //
+openFormWithReset(imageAddButton, imageAddPopup, imageAddForm);
+openFormWithValues(profileEditButton, profileEditPopup, profileEditForm);
 //
-//
+// enableValidation({
+//   formSelector: ".popup__container", // form
+//   inputSelector: ".popup__input", // input
+//   submitButtonSelector: ".popup__submit-button", // button
+//   inactiveButtonClass: "popup__submit-button_disabled", // button-disabled
+//   inputErrorClass: "popup__input_type_error", // input error
 
-// const form = document.querySelector(".form");
-// const formInput = form.querySelector(".form__input");
-// const formError = form.querySelector(`.${formInput.id}-error`);
-
-const showError = (obj, input, errorMessage) => {
-  const error = input.nextElementSibling;
-  input.classList.add(obj.inputErrorClass);
-  error.textContent = errorMessage;
-};
-
-const hideError = (obj, input) => {
-  const error = input.nextElementSibling;
-  input.classList.remove(obj.inputErrorClass);
-  error.textContent = "";
-};
-
-const checkInputValidity = (obj, input) => {
-  if (!input.validity.valid) {
-    showError(obj, input, input.validationMessage);
-  } else {
-    hideError(obj, input);
-  }
-};
-
-const setEventListeners = (form, obj) => {
-  const inputs = form.querySelectorAll(obj.inputSelector);
-  inputs.forEach((input) => {
-    input.addEventListener("input", function () {
-      checkInputValidity(obj, input);
-    });
-  });
-};
-
-function enableValidation(obj) {
-  const forms = document.querySelectorAll(obj.formSelector);
-  forms.forEach((form) => {
-    setEventListeners(form, obj);
-  });
-}
-
-// enableValidation();
-
-enableValidation({
-  formSelector: ".popup__container", // form
-  inputSelector: ".popup__input", // input
-  submitButtonSelector: ".popup__submit-button", // button
-  inactiveButtonClass: "popup__submit-button_disabled", // button-disabled
-  inputErrorClass: "popup__input_type_error", // input error
-
-  errorClass: "popup__field-error", // error-span-shown
-});
+//   errorClass: "popup__field-error", // error-span-shown
+// });
