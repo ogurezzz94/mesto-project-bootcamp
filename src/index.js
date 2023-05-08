@@ -1,14 +1,15 @@
+import '../pages/index.css';
+
 import {
   closeModalWindow,
   closeOnEscape,
-  closeOnEscape,
   stopProp,
-} from "./close-modal";
+} from "../scripts/close-modal";
 
-import { editProfile } from "./edit-popup";
-import { addImage } from "./add-image";
-import { openFormWithReset, openFormWithValues } from "./open-modal";
-import { enableValidation } from "./validation";
+import { editProfile } from "../scripts/edit-popup";
+import { addImage, createCard } from "../scripts/add-image";
+import { openFormWithReset, openFormWithValues } from "../scripts/open-modal";
+// import { enableValidation } from "../scripts/validation";
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditPopup = document.querySelector(".popup_action_edit-profile");
@@ -104,7 +105,8 @@ const objectCards = initialCards.map(function (item) {
 // render initial
 
 closeOnEscape(popups);
-objectCards.forEach(addCard);
+
+objectCards.forEach(createCard);
 
 // close modals
 closeModalWindow(closePopupElements);

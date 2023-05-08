@@ -33,4 +33,4 @@ function stopProp(arr) {
   });
 }
 
-export { closeModalWindow, closeOnEscape, closeOnEscape, stopProp };
+export { closeModalWindow, closeOnEscape, stopProp };

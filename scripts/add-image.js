@@ -53,4 +53,4 @@ function removeCard(button) {
   });
 }
 
-export { addImage };
+export { addImage, createCard };
