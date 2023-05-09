@@ -1,15 +1,15 @@
-import "../pages/index.css";
+import "./pages/index.css";
 
 import {
   closeModalWindow,
   closeOnEscape,
   stopProp,
-} from "../scripts/close-modal";
+} from "./scripts/close-modal";
 
-import { editProfile } from "../scripts/edit-popup";
-import { addImage, addCard } from "../scripts/add-image";
-import { openFormWithReset, openFormWithValues } from "../scripts/open-modal";
-import { enableValidation } from "../scripts/validation";
+import { editProfile } from "./scripts/edit-popup";
+import { addImage, addCard } from "./scripts/add-image";
+import { openFormWithReset, openFormWithValues } from "./scripts/open-modal";
+import { enableValidation } from "./scripts/validation";
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditPopup = document.querySelector(".popup_action_edit-profile");
