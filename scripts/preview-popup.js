@@ -1,9 +1,13 @@
-function openPreview(item) {
+import { openPopup } from "./open-modal";
+
+function openPreview(item, modal) {
   item.addEventListener("click", () => {
-    popupImage.src = item.src;
-    popupImage.alt = item.alt;
-    popupImageDescription.textContent = item.alt;
-    openPopup(popupPreview);
+    const image = modal.querySelector(".popup__image");
+    const source = modal.querySelector(".popup__image-description");
+    image.src = item.src;
+    image.alt = item.alt;
+    source.textContent = item.alt;
+    openPopup(modal);
   });
 }
 

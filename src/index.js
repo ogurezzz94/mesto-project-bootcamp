@@ -1,4 +1,4 @@
-import '../pages/index.css';
+import "../pages/index.css";
 
 import {
   closeModalWindow,
@@ -7,9 +7,9 @@ import {
 } from "../scripts/close-modal";
 
 import { editProfile } from "../scripts/edit-popup";
-import { addImage, createCard } from "../scripts/add-image";
+import { addImage, addCard } from "../scripts/add-image";
 import { openFormWithReset, openFormWithValues } from "../scripts/open-modal";
-// import { enableValidation } from "../scripts/validation";
+import { enableValidation } from "../scripts/validation";
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditPopup = document.querySelector(".popup_action_edit-profile");
@@ -22,34 +22,18 @@ const imageAddButton = document.querySelector(".profile__add-button");
 const imageAddPopup = document.querySelector(".popup_action_add-image");
 const imageAddForm = document.forms["add-image"];
 
-// open
-// const openEditPopupButton = document.querySelector(".profile__edit-button");
-// const openAddPopupButton = document.querySelector(".profile__add-button");
-
+// modals which should be closed
 const popups = document.querySelectorAll(".popup");
-
-// close
+// elements which close modals
 const closePopupElements = document.querySelectorAll(
   ".popup, .popup__close-button"
 );
-
-// stop prop
+// elements which should have prop stopped
 const modalWindows = document.querySelectorAll(
   ".popup__container, .popup__figure"
 );
-
 // preview
 const popupPreview = document.querySelector(".popup_action_preview");
-const popupImage = popupPreview.querySelector(".popup__image");
-const popupImageDescription = popupPreview.querySelector(
-  ".popup__image-description"
-);
-
-// open modals
-// const popupEditProfileForm = document.forms["edit-profile"];
-// const profileName = document.querySelector(".profile__name");
-// const profileDescription = document.querySelector(".profile__description");
-
 // templates
 const popupAddImageForm = document.forms["add-image"];
 const templateCard = document.querySelector(".template-element").content;
@@ -90,46 +74,43 @@ const objectCards = initialCards.map(function (item) {
   };
 });
 
-// modal window
+objectCards.forEach((el) => {
+  addCard(el, templateCard, templateSpace, popupPreview);
+});
 
-// close
-
-//  stop prop
-
-// edit popup
-
-// prewview
-
-// calls
-
-// render initial
-
-closeOnEscape(popups);
-
-objectCards.forEach(createCard);
-
+// open modals
+openFormWithReset(imageAddButton, imageAddPopup, imageAddForm);
+openFormWithValues(
+  profileEditButton,
+  profileEditPopup,
+  profileEditForm,
+  profileName,
+  profileDescription
+);
 // close modals
-closeModalWindow(closePopupElements);
-
-// stop ptop
 stopProp(modalWindows);
+closeOnEscape(popups);
+closeModalWindow(closePopupElements, popups);
 
 // submit for edit
-editProfile(profileEditForm);
+editProfile(profileEditForm, profileName, profileDescription);
 
 // submit for add
-addImage(popupAddImageForm, templateObject);
+addImage(
+  popupAddImageForm,
+  templateObject,
+  templateCard,
+  templateSpace,
+  popupPreview
+);
 
 //
-openFormWithReset(imageAddButton, imageAddPopup, imageAddForm);
-openFormWithValues(profileEditButton, profileEditPopup, profileEditForm);
-//
-// enableValidation({
-//   formSelector: ".popup__container", // form
-//   inputSelector: ".popup__input", // input
-//   submitButtonSelector: ".popup__submit-button", // button
-//   inactiveButtonClass: "popup__submit-button_disabled", // button-disabled
-//   inputErrorClass: "popup__input_type_error", // input error
+enableValidation({
+  formSelector: ".popup__container", // form
+  inputSelector: ".popup__input", // input
+  submitButtonSelector: ".popup__submit-button", // button
+  inactiveButtonClass: "popup__submit-button_disabled", // button-disabled
+  inputErrorClass: "popup__input_type_error", // input error
 
-//   errorClass: "popup__field-error", // error-span-shown
-// });
+  errorClass: "popup__field-error", // error-span-shown
+});

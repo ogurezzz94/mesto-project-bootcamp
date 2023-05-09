@@ -2,14 +2,14 @@ function closePopup(element) {
   element.classList.remove("popup_opened");
 }
 
-function closeModalWindow(arr) {
-  arr.forEach((button) => {
-    button.addEventListener("click", () => closeOnElement());
+function closeModalWindow(elements, popups) {
+  elements.forEach((button) => {
+    button.addEventListener("click", () => closeOnElement(popups));
   });
 }
 
 // for each element remove class
-function closeOnElement() {
+function closeOnElement(popups) {
   popups.forEach((element) => {
     closePopup(element);
   });
@@ -33,4 +33,4 @@ function stopProp(arr) {
   });
 }
 
-export { closeModalWindow, closeOnEscape, stopProp };
+export { closeModalWindow, closeOnEscape, stopProp, closePopup };

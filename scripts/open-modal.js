@@ -21,16 +21,16 @@ function openFormWithReset(button, element, form) {
   openPopupByButton(button, element);
 }
 
-function setInitialValues(button, form) {
+function setInitialValues(button, form, itemName, itemDescription) {
   button.addEventListener("click", () => {
-    form.name.value = profileName.textContent;
-    form.description.value = profileDescription.textContent;
+    form.name.value = itemName.textContent;
+    form.description.value = itemDescription.textContent;
   });
 }
 
-function openFormWithValues(button, element, form) {
+function openFormWithValues(button, element, form, itemName, itemDescription) {
   openFormWithReset(button, element, form);
-  setInitialValues(button, form);
+  setInitialValues(button, form, itemName, itemDescription);
 }
 
-export { openFormWithReset, openFormWithValues };
+export { openFormWithReset, openFormWithValues, openPopup };

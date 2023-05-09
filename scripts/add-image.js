@@ -1,23 +1,22 @@
 import { openPreview } from "./preview-popup";
+import { closePopup } from "./close-modal";
 // add image
 
 // get values from form, put this values to object, then transfer that object to the next fn
-function addImage(form, object) {
+function addImage(form, object, template, space, modal) {
   form.addEventListener("submit", (element) => {
     object["title"] = form.title.value;
     object["link"] = form.link.value;
 
-    addCard(object);
+    addCard(object, template, space, modal);
     closePopup(form.offsetParent);
     element.preventDefault();
     form.reset();
   });
 }
 
-function createCard(object) {
-  const templateElement = templateCard
-    .querySelector(".element")
-    .cloneNode(true);
+function createCard(object, template) {
+  const templateElement = template.querySelector(".element").cloneNode(true);
   const templateImage = templateElement.querySelector(".element__image");
   templateImage.src = object["link"];
   templateImage.alt = object["title"];
@@ -28,13 +27,13 @@ function createCard(object) {
 }
 
 // determine template elements and put values from object to requared places
-function addCard(object) {
-  const card = createCard(object);
+function addCard(object, template, space, modal) {
+  const card = createCard(object, template);
   toggleLikeButton(card.querySelector(".element__like-button"));
   removeCard(card.querySelector(".element__remove-button"));
-  openPreview(card.querySelector(".element__image"));
+  openPreview(card.querySelector(".element__image"), modal);
 
-  templateSpace.prepend(card);
+  space.prepend(card);
 }
 
 // like btns
@@ -53,4 +52,4 @@ function removeCard(button) {
   });
 }
 
-export { addImage, createCard };
+export { addImage, addCard };
