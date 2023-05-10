@@ -1,1 +1,7 @@
 sandbox.html
+node_modules
+/node_modules
+index.html
+/src/scripts/index.js
+dist
+/dist
