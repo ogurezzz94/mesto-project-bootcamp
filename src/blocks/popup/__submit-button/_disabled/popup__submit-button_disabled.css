@@ -1,0 +1,12 @@
+.popup__submit-button_disabled {
+  /* выполнил пологаясь на иллюстрацию макета */
+  color: black;
+  border: 1px solid black;
+  background-color: transparent;
+
+  opacity: 0.2;
+}
+.popup__submit-button_disabled:hover {
+  opacity: 0.2;
+  cursor: not-allowed;
+}

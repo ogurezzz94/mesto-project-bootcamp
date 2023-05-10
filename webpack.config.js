@@ -45,7 +45,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      favicon: "./images/logo/mesto-favicon.png"
+      favicon: "./src/images/logo/mesto-favicon.png"
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
