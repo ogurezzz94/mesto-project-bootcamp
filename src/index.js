@@ -1,15 +1,21 @@
 import "./pages/index.css";
 
+import {getApi} from "./scripts/api";
+
 import {
   closeModalWindow,
-  closeOnEscape,
   stopProp,
+  closePopup
 } from "./scripts/close-modal";
 
 import { editProfile } from "./scripts/edit-popup";
-import { addImage, addCard } from "./scripts/add-image";
+import { createCard } from "./scripts/add-image";
 import { openFormWithReset, openFormWithValues } from "./scripts/open-modal";
 import { enableValidation } from "./scripts/validation";
+
+import { openPreview } from "./scripts/preview-popup";
+import { toggleLikeButton } from "./scripts/like-card-button";
+import { removeCardButton } from "./scripts/remove-card-button";
 
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditPopup = document.querySelector(".popup_action_edit-profile");
@@ -40,43 +46,47 @@ const templateCard = document.querySelector(".template-element").content;
 const templateSpace = document.querySelector(".elements");
 const templateObject = {};
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
+const configCards = {
+  baseUrl: "https://nomoreparties.co/v1/wbf-cohort-8/cards",
+  headers: {
+    authorization: "31a2d760-4fa3-4c8c-9e34-6dea3045973e",
+    "Content-Type": "application/json",
   },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+};
 
-const objectCards = initialCards.map(function (item) {
-  return {
-    title: item.name,
-    link: item.link,
-  };
-});
+getApi(configCards,getInitialCards);
 
-objectCards.forEach((el) => {
+function getInitialCards (item) {item.forEach((el) => {
   addCard(el, templateCard, templateSpace, popupPreview);
 });
+}
+
+// get values from form, put this values to object, then transfer that object to the next fn
+function addImage(form, object, template, space, modal) {
+  form.addEventListener("submit", (element) => {
+    object["name"] = form.title.value;
+    object["link"] = form.link.value;
+
+    addCard(object, template, space, modal);
+    closePopup(form.offsetParent);
+    element.preventDefault();
+    form.reset();
+  });
+}
+
+// determine template elements and put values from object to requared places
+function addCard(object, template, space, modal) {
+  const card = createCard(object, template);
+  toggleLikeButton(card.querySelector(".element__like-button"));
+  removeCardButton(card.querySelector(".element__remove-button"));
+  openPreview(card.querySelector(".element__image"), modal);
+
+  space.prepend(card);
+}
+
+// initialCards.forEach((el) => {
+//   addCard(el, templateCard, templateSpace, popupPreview);
+// });
 
 // open modals
 openFormWithReset(imageAddButton, imageAddPopup, imageAddForm);
@@ -89,7 +99,7 @@ openFormWithValues(
 );
 // close modals
 stopProp(modalWindows);
-closeOnEscape(popups);
+// closeOnEscape(popups);
 closeModalWindow(closePopupElements, popups);
 
 // submit for edit

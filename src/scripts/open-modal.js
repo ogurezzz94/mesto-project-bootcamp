@@ -1,7 +1,9 @@
 // open
+import { closeOnKey } from "./close-modal";
 
 function openPopup(element) {
   element.classList.add("popup_opened");
+  closeOnKey()
 }
 
 function openPopupByButton(button, element) {
