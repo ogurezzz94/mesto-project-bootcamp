@@ -1,12 +1,8 @@
 import "./pages/index.css";
 
-import {getApi} from "./scripts/api";
+import { configCards, configUser, getCards, getUser } from "./scripts/api";
 
-import {
-  closeModalWindow,
-  stopProp,
-  closePopup
-} from "./scripts/close-modal";
+import { closeModalWindow, stopProp, closePopup } from "./scripts/close-modal";
 
 import { editProfile } from "./scripts/edit-popup";
 import { createCard } from "./scripts/add-image";
@@ -46,19 +42,14 @@ const templateCard = document.querySelector(".template-element").content;
 const templateSpace = document.querySelector(".elements");
 const templateObject = {};
 
-const configCards = {
-  baseUrl: "https://nomoreparties.co/v1/wbf-cohort-8/cards",
-  headers: {
-    authorization: "31a2d760-4fa3-4c8c-9e34-6dea3045973e",
-    "Content-Type": "application/json",
-  },
-};
+getCards(configCards, getInitialCards);
 
-getApi(configCards,getInitialCards);
+getUser(configUser);
 
-function getInitialCards (item) {item.forEach((el) => {
-  addCard(el, templateCard, templateSpace, popupPreview);
-});
+function getInitialCards(item) {
+  item.forEach((el) => {
+    addCard(el, templateCard, templateSpace, popupPreview);
+  });
 }
 
 // get values from form, put this values to object, then transfer that object to the next fn
