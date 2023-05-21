@@ -1,11 +1,18 @@
 import "./pages/index.css";
 
-import { configCards, configUser, getCards, getUser } from "./scripts/api";
+import {
+  configCards,
+  configUser,
+  getCards,
+  getUser,
+  postCard,
+} from "./scripts/api";
+import { renderUser, renderCards, createCard } from "./scripts/render";
 
 import { closeModalWindow, stopProp, closePopup } from "./scripts/close-modal";
 
 import { editProfile } from "./scripts/edit-popup";
-import { createCard } from "./scripts/add-image";
+import { editAvatar } from "./scripts/avatar-modal";
 import { openFormWithReset, openFormWithValues } from "./scripts/open-modal";
 import { enableValidation } from "./scripts/validation";
 
@@ -17,8 +24,12 @@ const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditPopup = document.querySelector(".popup_action_edit-profile");
 const profileEditForm = document.forms["edit-profile"];
 
-const profileName = document.querySelector(".profile__name");
-const profileDescription = document.querySelector(".profile__description");
+const profileBlock = document.querySelector(".profile");
+const profileElement = {
+  name: profileBlock.querySelector(".profile__name"),
+  description: profileBlock.querySelector(".profile__description"),
+  avatar: profileBlock.querySelector(".profile__avatar-image"),
+};
 
 const imageAddButton = document.querySelector(".profile__add-button");
 const imageAddPopup = document.querySelector(".popup_action_add-image");
@@ -42,23 +53,31 @@ const templateCard = document.querySelector(".template-element").content;
 const templateSpace = document.querySelector(".elements");
 const templateObject = {};
 
-getCards(configCards, getInitialCards);
+const editAvatarButton = document.querySelector(".profile__avatar-button");
+const editAvatarPopup = document.querySelector(".popup_action_edit-avatar");
+const profileAvatarForm = document.forms["edit-avatar"];
 
-getUser(configUser);
+openFormWithReset(editAvatarButton, editAvatarPopup, profileAvatarForm);
+editAvatar(profileAvatarForm, profileElement);
 
-function getInitialCards(item) {
-  item.forEach((el) => {
-    addCard(el, templateCard, templateSpace, popupPreview);
-  });
-}
+// Init load
+Promise.all([getUser(), getCards()]).then(([user, cards]) => {
+  renderUser(user, profileElement);
+  renderCards(cards);
+});
 
 // get values from form, put this values to object, then transfer that object to the next fn
-function addImage(form, object, template, space, modal) {
+// function addImage(form, object, template, space, modal) {
+function addImage(form, object) {
   form.addEventListener("submit", (element) => {
     object["name"] = form.title.value;
     object["link"] = form.link.value;
 
-    addCard(object, template, space, modal);
+    postCard(object)
+      .then(() => console.log("create card", object))
+      .then(() => getCards().then((cards) => renderCards(cards)));
+
+    // addCard(object, template, space, modal);
     closePopup(form.offsetParent);
     element.preventDefault();
     form.reset();
@@ -66,8 +85,8 @@ function addImage(form, object, template, space, modal) {
 }
 
 // determine template elements and put values from object to requared places
-function addCard(object, template, space, modal) {
-  const card = createCard(object, template);
+function addCard(item, template, space, modal) {
+  const card = createCard(item, template);
   toggleLikeButton(card.querySelector(".element__like-button"));
   removeCardButton(card.querySelector(".element__remove-button"));
   openPreview(card.querySelector(".element__image"), modal);
@@ -85,8 +104,7 @@ openFormWithValues(
   profileEditButton,
   profileEditPopup,
   profileEditForm,
-  profileName,
-  profileDescription
+  profileElement
 );
 // close modals
 stopProp(modalWindows);
@@ -94,7 +112,7 @@ stopProp(modalWindows);
 closeModalWindow(closePopupElements, popups);
 
 // submit for edit
-editProfile(profileEditForm, profileName, profileDescription);
+editProfile(profileEditForm, profileElement);
 
 // submit for add
 addImage(

@@ -2,43 +2,71 @@ const headersParameters = {
   authorization: "31a2d760-4fa3-4c8c-9e34-6dea3045973e",
   "Content-Type": "application/json",
 };
+const baseUrl = "https://nomoreparties.co/v1/wbf-cohort-8";
 
-const configCards = {
-  baseUrl: "https://nomoreparties.co/v1/wbf-cohort-8/cards",
-  headers: headersParameters,
-};
-
-const configUser = {
-  baseUrl: "https://nomoreparties.co/v1/wbf-cohort-8/users/me",
-  headers: headersParameters,
-};
-
-function getCards(config, fn) {
-  return fetch(config.baseUrl, {
+function apiGet(uri) {
+  return fetch(baseUrl + uri, {
     method: "GET",
-    headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) return res.json();
-      return Promise.reject(`${res.stauts}`);
-    })
-    .then((result) => fn(result))
-    .catch((err) => console.log(err));
+    headers: headersParameters,
+  }).then((res) => res.json());
 }
 
-function getUser(config) {
-  return fetch(config.baseUrl, {
-    method: "GET",
-    headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) return res.json();
-      return Promise.reject(`${res.stauts}`);
-    })
-    .then((result) => {
-      console.log(result)
-    })
-    .catch((err) => console.log(err));
+function apiPost(uri, body) {
+  return fetch(baseUrl + uri, {
+    method: "POST",
+    headers: headersParameters,
+    body: JSON.stringify(body),
+  });
 }
 
-export { configCards, configUser, getCards, getUser };
+function apiDelete(uri) {
+  return fetch(baseUrl + uri, {
+    method: "DELETE",
+    headers: headersParameters,
+  });
+}
+
+function apiEditProfile(uri, data) {
+  return fetch(baseUrl + uri, {
+    method: "PATCH",
+    headers: headersParameters,
+    body: JSON.stringify({
+      name: data.name,
+      about: data.description,
+    }),
+  });
+}
+
+function apiEditAvatar(uri, data) {
+  return fetch(baseUrl + uri, {
+    method: "PATCH",
+    headers: headersParameters,
+    body: JSON.stringify({
+      avatar: data,
+    }),
+  });
+}
+
+export function getCards() {
+  return apiGet("/cards");
+}
+
+export function getUser() {
+  return apiGet("/users/me");
+}
+
+export function postCard(card) {
+  return apiPost("/cards", card);
+}
+
+export function deleteCard(id) {
+  return apiDelete(`/cards/${id}`);
+}
+
+export function patchProfile(data) {
+  return apiEditProfile("/users/me", data);
+}
+
+export function patchAvatar(data) {
+  return apiEditAvatar("/users/me/avatar", data);
+}
