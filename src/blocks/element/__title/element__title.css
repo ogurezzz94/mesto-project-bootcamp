@@ -1,4 +1,5 @@
 .element__title {
+  grid-area: title;
   margin: 0;
   padding-left: 21px;
 

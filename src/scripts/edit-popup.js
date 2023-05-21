@@ -1,13 +1,17 @@
 import { closePopup } from "./close-modal";
+import { patchProfile } from "./api";
 
-function editProfile(form, itemName, itemDescription) {
+export function editProfile(form, profile) {
   form.addEventListener("submit", (element) => {
-    itemName.textContent = form.name.value;
-    itemDescription.textContent = form.description.value;
+    const name = form.name.value;
+    const description = form.description.value;
+
+    profile.name.textContent = name;
+    profile.description.textContent = description;
+
+    patchProfile({ name, description });
     closePopup(form.offsetParent);
     element.preventDefault();
     form.reset();
   });
 }
-
-export { editProfile };

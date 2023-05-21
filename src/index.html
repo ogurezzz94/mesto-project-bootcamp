@@ -15,7 +15,11 @@
 
     <main class="content">
       <section class="profile">
-        <img alt="аватар" class="profile__avatar" src=<%=require("./images/examples/ava.jpg")%> >
+        <div class="profile__avatar">
+          <img alt="аватар" class="profile__avatar-image" src=<%=require("./images/examples/ava.jpg")%> >
+          <button class="profile__avatar-button" type="button"></button>
+        </div>
+
         <div class="profile__info">
           <h1 class="profile__name" data-profile="name">Александр Огурцов</h1>
           <button class="profile__edit-button" type="button" aria-label="Редактировать профиль" data-open=".popup_action_edit-profile"></button>
@@ -57,14 +61,22 @@
     </div>
 
     <div class="popup popup_action_preview">
-
       <figure class="popup__figure">
         <button class="popup__close-button" type="button"></button>
         <img src="" alt="Предпросмотр" class="popup__image">
         <figcaption class="popup__image-description"></figcaption>
       </figure>
     </div>
+  </div>
 
+  <div class="popup popup_action_edit-avatar">
+    <form class="popup__container popup__container_form_edit-avatar" name="edit-avatar" method="get" novalidate>
+      <button class="popup__close-button" type="reset" aria-label="Крестик"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <input class="popup__input" placeholder="Ссылка на фотографию" name="avatar" type="url" required autocomplete="off">
+      <span class="popup__field-error"></span>
+      <button class="popup__submit-button" type="submit" aria-label="Сохранить">Сохранить</button>
+    </form>
   </div>
 
   <template class="template-element">
@@ -73,6 +85,7 @@
       <img src="" alt="" class="element__image">
       <h2 class="element__title"></h2>
       <button class="element__like-button" type="button" aria-label="Сердечко"></button>
+      <p class="element__like-counter">0</p>
     </article>
   </template>
 

@@ -1,55 +1,33 @@
-import { openPreview } from "./preview-popup";
-import { closePopup } from "./close-modal";
-// add image
-
-// get values from form, put this values to object, then transfer that object to the next fn
-function addImage(form, object, template, space, modal) {
-  form.addEventListener("submit", (element) => {
-    object["title"] = form.title.value;
-    object["link"] = form.link.value;
-
-    addCard(object, template, space, modal);
-    closePopup(form.offsetParent);
-    element.preventDefault();
-    form.reset();
-  });
-}
-
-function createCard(object, template) {
-  const templateElement = template.querySelector(".element").cloneNode(true);
+export function createCard({ data, template, onDelete, onLike }) {
+  const templateElement = template.firstElementChild.cloneNode(true);
   const templateImage = templateElement.querySelector(".element__image");
-  templateImage.src = object["link"];
-  templateImage.alt = object["title"];
   const templateTitle = templateElement.querySelector(".element__title");
-  templateTitle.textContent = object["title"];
+  const likeButton = templateElement.querySelector(".element__like-button");
+  const removeButton = templateElement.querySelector(".element__remove-button");
+
+  templateImage.src = data.link;
+  templateImage.alt = data.name;
+  templateTitle.textContent = data.name;
+
+  likeButton.addEventListener("click", (event) => {
+    onLike({ event, button: likeButton, cardElement: templateElement, data });
+  });
+
+  const userId = localStorage.getItem("UserId");
+  if (!userId) console.error("User ID is empty!");
+
+  if (userId === data.owner._id) {
+    removeButton.addEventListener("click", (event) => {
+      onDelete({
+        event,
+        button: removeButton,
+        cardElement: templateElement,
+        data,
+      });
+    });
+  } else {
+    removeButton.remove();
+  }
 
   return templateElement;
 }
-
-// determine template elements and put values from object to requared places
-function addCard(object, template, space, modal) {
-  const card = createCard(object, template);
-  toggleLikeButton(card.querySelector(".element__like-button"));
-  removeCard(card.querySelector(".element__remove-button"));
-  openPreview(card.querySelector(".element__image"), modal);
-
-  space.prepend(card);
-}
-
-// like btns
-
-function toggleLikeButton(item) {
-  item.addEventListener("click", () => {
-    item.classList.toggle("element__like-button_enabled");
-  });
-}
-
-// remove card
-
-function removeCard(button) {
-  button.addEventListener("click", () => {
-    button.parentElement.remove();
-  });
-}
-
-export { addImage, addCard };
