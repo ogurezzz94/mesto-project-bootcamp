@@ -47,6 +47,21 @@ function apiEditAvatar(uri, data) {
   });
 }
 
+function apiPutLike(uri, body) {
+  return fetch(baseUrl + uri, {
+    method: "PUT",
+    headers: headersParameters,
+    body: JSON.stringify(body),
+  });
+}
+
+function apiRemoveLike(uri) {
+  return fetch(baseUrl + uri, {
+    method: "DELETE",
+    headers: headersParameters,
+  });
+}
+
 export function getCards() {
   return apiGet("/cards");
 }
@@ -69,4 +84,12 @@ export function patchProfile(data) {
 
 export function patchAvatar(data) {
   return apiEditAvatar("/users/me/avatar", data);
+}
+
+export function putLike(id) {
+  return apiPutLike(`/cards/likes/${id}`);
+}
+
+export function removeLike(id) {
+  return apiRemoveLike(`/cards/likes/${id}`);
 }
