@@ -16,16 +16,18 @@ function closeOnElement(popups) {
 }
 
 function closeOnKey() {
-  const item = document.querySelectorAll('.popup')
-  document.body.addEventListener("keyup",(event) => closeOnEscape(event, item));
+  const item = document.querySelectorAll(".popup");
+  document.body.addEventListener("keyup", (event) =>
+    closeOnEscape(event, item)
+  );
 }
 
-function closeOnEscape (event, item) {
+function closeOnEscape(event, item) {
   if (event.key === "Escape") {
     item.forEach((element) => {
       if (element.classList.contains("popup_opened")) {
         closePopup(element);
-        document.body.removeEventListener("keyup", closeOnKey)
+        document.body.removeEventListener("keyup", closeOnKey);
       }
     });
   }

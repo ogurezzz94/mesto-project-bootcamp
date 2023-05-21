@@ -24,6 +24,12 @@ const profileEditButton = document.querySelector(".profile__edit-button");
 const profileEditPopup = document.querySelector(".popup_action_edit-profile");
 const profileEditForm = document.forms["edit-profile"];
 
+const profileEditElement = {
+  button: document.querySelector(".profile__edit-button"),
+  popup: document.querySelector(".popup_action_edit-profile"),
+  form: document.forms["edit-profile"],
+};
+
 const profileBlock = document.querySelector(".profile");
 const profileElement = {
   name: profileBlock.querySelector(".profile__name"),
@@ -34,6 +40,12 @@ const profileElement = {
 const imageAddButton = document.querySelector(".profile__add-button");
 const imageAddPopup = document.querySelector(".popup_action_add-image");
 const imageAddForm = document.forms["add-image"];
+
+const imageAddElement = {
+  button: document.querySelector(".profile__add-button"),
+  popup: document.querySelector(".popup_action_add-image"),
+  form: document.forms["add-image"],
+};
 
 // modals which should be closed
 const popups = document.querySelectorAll(".popup");
@@ -57,8 +69,14 @@ const editAvatarButton = document.querySelector(".profile__avatar-button");
 const editAvatarPopup = document.querySelector(".popup_action_edit-avatar");
 const profileAvatarForm = document.forms["edit-avatar"];
 
-openFormWithReset(editAvatarButton, editAvatarPopup, profileAvatarForm);
-editAvatar(profileAvatarForm, profileElement);
+const editAvatarElement = {
+  button: document.querySelector(".profile__avatar-button"),
+  popup: document.querySelector(".popup_action_edit-avatar"),
+  form: document.forms["edit-avatar"],
+}
+
+openFormWithReset( editAvatarElement.button, editAvatarElement.popup, editAvatarElement.form );
+editAvatar(editAvatarElement, profileElement);
 
 // Init load
 Promise.all([getUser(), getCards()]).then(([user, cards]) => {

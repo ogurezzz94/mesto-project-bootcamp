@@ -1,13 +1,13 @@
 import { closePopup } from "./close-modal";
 import { patchAvatar } from "./api";
 
-export function editAvatar(form, profile) {
+export function editAvatar({ form }, { avatar }) {
   form.addEventListener("submit", (element) => {
-    const avatar = form.avatar.value;
+    const image = form.avatar.value;
 
-    profile.avatar.src = avatar;
+    avatar.src = image;
 
-    patchAvatar(avatar);
+    patchAvatar(image);
     closePopup(form.offsetParent);
     element.preventDefault();
     form.reset();
