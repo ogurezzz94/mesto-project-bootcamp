@@ -2,7 +2,7 @@ import { closePopup } from "./close-modal";
 import { patchProfile } from "./api";
 
 export function editProfile(form, profile) {
-  form.addEventListener("submit", (element) => {
+  form.addEventListener("submit", (event) => {
     const name = form.name.value;
     const description = form.description.value;
 
@@ -11,7 +11,7 @@ export function editProfile(form, profile) {
 
     patchProfile({ name, description });
     closePopup(form.offsetParent);
-    element.preventDefault();
+    event.preventDefault();
     form.reset();
   });
 }
