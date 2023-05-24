@@ -4,29 +4,23 @@ const headersParameters = {
 };
 const baseUrl = "https://nomoreparties.co/v1/wbf-cohort-8";
 
-function apiGet(uri) {
-  return fetch(baseUrl + uri, {
-    method: "GET",
-    headers: headersParameters,
-  }).then((res) => res.json());
+// TODO обеденить логику apiGet, apiPost, apiDelete... в один метод
+function api(uri, method, data) {
+  if (!data) {
+    return fetch(baseUrl + uri, {
+      method: method.toUpperCase(),
+      headers: headersParameters,
+    }).then((res) => res.json());
+  } else {
+    return fetch(baseUrl + uri, {
+      method: method.toUpperCase(),
+      headers: headersParameters,
+      body: JSON.stringify(data),
+    }).then((res) => res.json());
+  }
 }
 
-function apiPost(uri, body) {
-  return fetch(baseUrl + uri, {
-    method: "POST",
-    headers: headersParameters,
-    body: JSON.stringify(body),
-  });
-}
-
-function apiDelete(uri) {
-  return fetch(baseUrl + uri, {
-    method: "DELETE",
-    headers: headersParameters,
-  });
-}
-
-function apiEditProfile(uri, data) {
+function apiPatchProfile(uri, data) {
   return fetch(baseUrl + uri, {
     method: "PATCH",
     headers: headersParameters,
@@ -37,7 +31,7 @@ function apiEditProfile(uri, data) {
   });
 }
 
-function apiEditAvatar(uri, data) {
+function apiPatchAvatar(uri, data) {
   return fetch(baseUrl + uri, {
     method: "PATCH",
     headers: headersParameters,
@@ -47,49 +41,34 @@ function apiEditAvatar(uri, data) {
   });
 }
 
-function apiPutLike(uri, body) {
-  return fetch(baseUrl + uri, {
-    method: "PUT",
-    headers: headersParameters,
-    body: JSON.stringify(body),
-  });
-}
-
-function apiRemoveLike(uri) {
-  return fetch(baseUrl + uri, {
-    method: "DELETE",
-    headers: headersParameters,
-  });
-}
-
 export function getCards() {
-  return apiGet("/cards");
+  return api("/cards", "get");
 }
 
 export function getUser() {
-  return apiGet("/users/me");
+  return api("/users/me", "get");
 }
 
 export function postCard(card) {
-  return apiPost("/cards", card);
+  return api("/cards", "post", card);
 }
 
 export function deleteCard(id) {
-  return apiDelete(`/cards/${id}`);
+  return api(`/cards/${id}`, "delete");
 }
 
 export function patchProfile(data) {
-  return apiEditProfile("/users/me", data);
+  return apiPatchProfile("/users/me", data);
 }
 
 export function patchAvatar(data) {
-  return apiEditAvatar("/users/me/avatar", data);
+  return apiPatchAvatar("/users/me/avatar", data);
 }
 
 export function putLike(id) {
-  return apiPutLike(`/cards/likes/${id}`);
+  return api(`/cards/likes/${id}`, "put");
 }
 
 export function removeLike(id) {
-  return apiRemoveLike(`/cards/likes/${id}`);
+  return api(`/cards/likes/${id}`, "delete");
 }

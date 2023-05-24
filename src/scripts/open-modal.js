@@ -1,4 +1,3 @@
-// open
 import { closeOnKey } from "./close-modal";
 
 export function openPopup(element) {
@@ -6,37 +5,19 @@ export function openPopup(element) {
   closeOnKey();
 }
 
-function openPopupByButton(button, element) {
-  button.addEventListener("click", () => {
-    openPopup(element);
+export function openFormWithReset(elements) {
+  elements.button.addEventListener("click", () => {
+    elements.form.reset();
+  });
+  elements.button.addEventListener("click", () => {
+    openPopup(elements.popup);
   });
 }
 
-function resetFormByButton(button, form) {
-  button.addEventListener("click", () => {
-    form.reset();
+export function openFormWithValues(element, profile) {
+  openFormWithReset(element);
+  element.button.addEventListener("click", () => {
+    element.form.name.value = profile.name.textContent;
+    element.form.description.value = profile.description.textContent;
   });
-}
-
-export function openFormWithReset(button, element, form) {
-  resetFormByButton(button, form);
-  openPopupByButton(button, element);
-}
-
-function setInitialValues(button, form, profile) {
-  button.addEventListener("click", () => {
-    form.name.value = profile.name.textContent;
-    form.description.value = profile.description.textContent;
-  });
-}
-
-export function openFormWithValues(
-  button,
-  element,
-  form,
-  itemName,
-  itemDescription
-) {
-  openFormWithReset(button, element, form);
-  setInitialValues(button, form, itemName, itemDescription);
 }
