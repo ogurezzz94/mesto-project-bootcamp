@@ -1,4 +1,4 @@
-import { openPopup } from "./open-modal";
+import { openPopup } from "./modal-open-close";
 
 export function openPreview(item, modal = document.querySelector('.popup_action_preview')) {
   item.addEventListener("click", () => {

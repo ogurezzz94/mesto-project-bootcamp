@@ -1,4 +1,4 @@
-import { closePopup } from "./close-modal";
+import { closeElement } from "./modal-open-close";
 import { patchProfile } from "./api";
 
 export function editProfile(form, profile) {
@@ -10,7 +10,7 @@ export function editProfile(form, profile) {
     profile.description.textContent = description;
 
     patchProfile({ name, description });
-    closePopup(form.offsetParent);
+    closeElement(form.offsetParent);
     event.preventDefault();
     form.reset();
   });
