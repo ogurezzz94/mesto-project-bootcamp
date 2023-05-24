@@ -1,27 +1,39 @@
 import "./pages/index.css";
 
-import {
-  closeModalWindow,
-  closeOnEscape,
-  stopProp,
-} from "./scripts/close-modal";
+import { getCards, getUser, postCard } from "./scripts/api";
+import { renderUser, renderCards } from "./scripts/render";
+import { createCard } from "./scripts/card";
+import { openPreview } from "./scripts/preview-popup";
+
+import { openFormWithReset, openFormWithValues } from "./scripts/open-modal";
+import { closeModalWindow, stopProp, closePopup } from "./scripts/close-modal";
 
 import { editProfile } from "./scripts/edit-popup";
-import { addImage, addCard } from "./scripts/add-image";
-import { openFormWithReset, openFormWithValues } from "./scripts/open-modal";
+import { editAvatar } from "./scripts/avatar-modal";
+
 import { enableValidation } from "./scripts/validation";
 
-const profileEditButton = document.querySelector(".profile__edit-button");
-const profileEditPopup = document.querySelector(".popup_action_edit-profile");
-const profileEditForm = document.forms["edit-profile"];
-
-const profileName = document.querySelector(".profile__name");
-const profileDescription = document.querySelector(".profile__description");
-
-const imageAddButton = document.querySelector(".profile__add-button");
-const imageAddPopup = document.querySelector(".popup_action_add-image");
-const imageAddForm = document.forms["add-image"];
-
+const profileBlock = document.querySelector(".profile");
+const profileElement = {
+  name: profileBlock.querySelector(".profile__name"),
+  description: profileBlock.querySelector(".profile__description"),
+  avatar: profileBlock.querySelector(".profile__avatar-image"),
+};
+const profileEditElement = {
+  button: document.querySelector(".profile__edit-button"),
+  popup: document.querySelector(".popup_action_edit-profile"),
+  form: document.forms["edit-profile"],
+};
+const avatarEditElement = {
+  button: document.querySelector(".profile__avatar-button"),
+  popup: document.querySelector(".popup_action_edit-avatar"),
+  form: document.forms["edit-avatar"],
+};
+const imageAddElement = {
+  button: document.querySelector(".profile__add-button"),
+  popup: document.querySelector(".popup_action_add-image"),
+  form: document.forms["add-image"],
+};
 // modals which should be closed
 const popups = document.querySelectorAll(".popup");
 // elements which close modals
@@ -40,61 +52,44 @@ const templateCard = document.querySelector(".template-element").content;
 const templateSpace = document.querySelector(".elements");
 const templateObject = {};
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
-const objectCards = initialCards.map(function (item) {
-  return {
-    title: item.name,
-    link: item.link,
-  };
+// Init load
+Promise.all([getUser(), getCards()]).then(([user, cards]) => {
+  renderUser(user, profileElement);
+  renderCards(cards, templateCard, templateSpace);
 });
 
-objectCards.forEach((el) => {
-  addCard(el, templateCard, templateSpace, popupPreview);
-});
+function addImage(form, object, template, space, modal) {
+  form.addEventListener("submit", (element) => {
+    object["name"] = form.title.value;
+    object["link"] = form.link.value;
+    postCard(object).then((card) => addCard(card, template, space, modal));
+    closePopup(form.offsetParent);
+    element.preventDefault();
+    form.reset();
+  });
+}
 
+function addCard(data, template, space, modal) {
+  const card = createCard({
+    data,
+    template,
+    onDelete: () => {},
+    onLike: () => {},
+  });
+  openPreview(card.querySelector(".element__image"), modal);
+
+  space.prepend(card);
+}
 // open modals
-openFormWithReset(imageAddButton, imageAddPopup, imageAddForm);
-openFormWithValues(
-  profileEditButton,
-  profileEditPopup,
-  profileEditForm,
-  profileName,
-  profileDescription
-);
+openFormWithReset(imageAddElement);
+openFormWithReset(avatarEditElement);
+openFormWithValues(profileEditElement, profileElement);
 // close modals
 stopProp(modalWindows);
-closeOnEscape(popups);
+// closeOnEscape(popups);
 closeModalWindow(closePopupElements, popups);
-
-// submit for edit
-editProfile(profileEditForm, profileName, profileDescription);
-
+editProfile(profileEditElement.form, profileElement);
+editAvatar(avatarEditElement, profileElement);
 // submit for add
 addImage(
   popupAddImageForm,
@@ -104,7 +99,6 @@ addImage(
   popupPreview
 );
 
-//
 enableValidation({
   formSelector: ".popup__container", // form
   inputSelector: ".popup__input", // input

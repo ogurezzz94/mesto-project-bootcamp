@@ -1,28 +1,44 @@
 function closePopup(element) {
   element.classList.remove("popup_opened");
 }
+//addWatchCloseModels
+const handle = () => closeOnElement(popups);
 
 function closeModalWindow(elements, popups) {
   elements.forEach((button) => {
-    button.addEventListener("click", () => closeOnElement(popups));
+    button.addEventListener("click", (e) => closeOnElement(popups));
   });
 }
+
+function removeWatchCloseModels(button, handle) {
+  button.removeEventListener("click", handle);
+}
+
 
 // for each element remove class
 function closeOnElement(popups) {
   popups.forEach((element) => {
     closePopup(element);
+
   });
 }
 
-function closeOnEscape(item) {
-  document.body.addEventListener("keyup", function (event) {
-    if (event.key === "Escape") {
-      item.forEach((element) => {
+function closeOnKey() {
+  const popups = document.querySelectorAll(".popup");
+  document.body.addEventListener("keyup", (event) =>
+    closeOnEscape(event, popups)
+  );
+}
+
+function closeOnEscape(event, items) {
+  if (event.key === "Escape") {
+    items.forEach((element) => {
+      if (element.classList.contains("popup_opened")) {
         closePopup(element);
-      });
-    }
-  });
+        document.body.removeEventListener("keyup", closeOnKey);
+      }
+    });
+  }
 }
 
 function stopProp(arr) {
@@ -33,4 +49,4 @@ function stopProp(arr) {
   });
 }
 
-export { closeModalWindow, closeOnEscape, stopProp, closePopup };
+export { closeModalWindow, closeOnKey, stopProp, closePopup, closeOnEscape };

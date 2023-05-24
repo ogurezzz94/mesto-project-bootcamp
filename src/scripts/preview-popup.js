@@ -1,6 +1,6 @@
 import { openPopup } from "./open-modal";
 
-function openPreview(item, modal) {
+export function openPreview(item, modal = document.querySelector('.popup_action_preview')) {
   item.addEventListener("click", () => {
     const image = modal.querySelector(".popup__image");
     const source = modal.querySelector(".popup__image-description");
@@ -10,5 +10,3 @@ function openPreview(item, modal) {
     openPopup(modal);
   });
 }
-
-export { openPreview };
