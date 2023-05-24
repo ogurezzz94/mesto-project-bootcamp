@@ -19,28 +19,22 @@ function closeElementHandler(element, button) {
   });
 }
 
-function closeOnKey() {
-  const popups = document.querySelectorAll(".popup");
+function closeKeyHandler(element, key) {
   document.body.addEventListener("keyup", (event) =>
-    closeOnEscape(event, popups)
+    closeOnKey(event, element, key)
   );
 }
-
-function closeOnEscape(event, items) {
-  if (event.key === "Escape") {
-    items.forEach((element) => {
-      if (element.classList.contains("popup_opened")) {
-        closeElement(element);
-        document.body.removeEventListener("keyup", closeOnKey);
-      }
-    });
+function closeOnKey(event, element, key) {
+  if (event.key === key) {
+    closeElement(element);
+    document.body.removeEventListener("keyup", close);
   }
 }
 
 export function openPopup(element) {
   element.classList.add("popup_opened");
   const closeButton = element.querySelector('[aria-label="Крестик"]');
-  closeOnKey();
+  closeKeyHandler(element, "Escape");
   closeElementHandler(element);
   closeElementHandler(element, closeButton);
 }
