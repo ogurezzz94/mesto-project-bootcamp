@@ -1,4 +1,4 @@
-import { closePopup } from "./close-modal";
+import { closeElement } from "./modal-open-close";
 import { patchAvatar } from "./api";
 
 export function editAvatar({ form }, { avatar }) {
@@ -8,7 +8,7 @@ export function editAvatar({ form }, { avatar }) {
     avatar.src = image;
 
     patchAvatar(image);
-    closePopup(form.offsetParent);
+    closeElement(form.offsetParent);
     element.preventDefault();
     form.reset();
   });

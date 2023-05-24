@@ -3,13 +3,16 @@ import "./pages/index.css";
 import { getCards, getUser, postCard } from "./scripts/api";
 import { renderUser, renderCards } from "./scripts/render";
 import { createCard } from "./scripts/card";
-import { openPreview } from "./scripts/preview-popup";
+import { openPreview } from "./scripts/popup-open-preview";
 
-import { openFormWithReset, openFormWithValues } from "./scripts/open-modal";
-import { closeModalWindow, stopProp, closePopup } from "./scripts/close-modal";
+import {
+  closeElement,
+  openFormWithReset,
+  openFormWithValues,
+} from "./scripts/modal-open-close";
 
-import { editProfile } from "./scripts/edit-popup";
-import { editAvatar } from "./scripts/avatar-modal";
+import { editProfile } from "./scripts/popup-edit-profile";
+import { editAvatar } from "./scripts/popup-edit-avatar";
 
 import { enableValidation } from "./scripts/validation";
 
@@ -34,16 +37,6 @@ const imageAddElement = {
   popup: document.querySelector(".popup_action_add-image"),
   form: document.forms["add-image"],
 };
-// modals which should be closed
-const popups = document.querySelectorAll(".popup");
-// elements which close modals
-const closePopupElements = document.querySelectorAll(
-  ".popup, .popup__close-button"
-);
-// elements which should have prop stopped
-const modalWindows = document.querySelectorAll(
-  ".popup__container, .popup__figure"
-);
 // preview
 const popupPreview = document.querySelector(".popup_action_preview");
 // templates
@@ -63,7 +56,7 @@ function addImage(form, object, template, space, modal) {
     object["name"] = form.title.value;
     object["link"] = form.link.value;
     postCard(object).then((card) => addCard(card, template, space, modal));
-    closePopup(form.offsetParent);
+    closeElement(form.offsetParent);
     element.preventDefault();
     form.reset();
   });
@@ -72,9 +65,7 @@ function addImage(form, object, template, space, modal) {
 function addCard(data, template, space, modal) {
   const card = createCard({
     data,
-    template,
-    onDelete: () => {},
-    onLike: () => {},
+    template
   });
   openPreview(card.querySelector(".element__image"), modal);
 
@@ -84,10 +75,7 @@ function addCard(data, template, space, modal) {
 openFormWithReset(imageAddElement);
 openFormWithReset(avatarEditElement);
 openFormWithValues(profileEditElement, profileElement);
-// close modals
-stopProp(modalWindows);
-// closeOnEscape(popups);
-closeModalWindow(closePopupElements, popups);
+
 editProfile(profileEditElement.form, profileElement);
 editAvatar(avatarEditElement, profileElement);
 // submit for add

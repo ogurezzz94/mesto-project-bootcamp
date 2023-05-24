@@ -1,5 +1,5 @@
 import { renderLike, removeCard } from "./card-buttons";
-import { openPreview } from "./preview-popup";
+import { openPreview } from "./popup-open-preview";
 
 export function createCard({ data, template }) {
   const userId = localStorage.getItem("UserId");
