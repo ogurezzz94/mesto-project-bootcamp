@@ -1,22 +1,23 @@
+import { checkResponse } from "./utils";
+
 const headersParameters = {
   authorization: "31a2d760-4fa3-4c8c-9e34-6dea3045973e",
   "Content-Type": "application/json",
 };
 const baseUrl = "https://nomoreparties.co/v1/wbf-cohort-8";
 
-// TODO обеденить логику apiGet, apiPost, apiDelete... в один метод
 function api(uri, method, data) {
   if (!data) {
     return fetch(baseUrl + uri, {
       method: method.toUpperCase(),
       headers: headersParameters,
-    }).then((res) => res.json());
+    }).then((res) => checkResponse(res));
   } else {
     return fetch(baseUrl + uri, {
       method: method.toUpperCase(),
       headers: headersParameters,
       body: JSON.stringify(data),
-    }).then((res) => res.json());
+    }).then((res) => checkResponse(res));
   }
 }
 
@@ -28,7 +29,7 @@ function apiPatchProfile(uri, data) {
       name: data.name,
       about: data.description,
     }),
-  });
+  }).then((res) => checkResponse(res));
 }
 
 function apiPatchAvatar(uri, data) {
@@ -38,7 +39,7 @@ function apiPatchAvatar(uri, data) {
     body: JSON.stringify({
       avatar: data,
     }),
-  });
+  }).then((res) => checkResponse(res));
 }
 
 export function getCards() {
