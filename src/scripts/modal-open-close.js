@@ -10,7 +10,6 @@ function clreaCloseWatcher(popup) {
   btn.removeEventListener("click", popupCloseBtnListener);
 }
 
-
 function popupCloseBtnListener(event) {
   event.stopPropagation();
   closePopup(document.querySelector(".popup_opened"));
@@ -19,6 +18,7 @@ function popupCloseBtnListener(event) {
 function popupCloseEscListener(event) {
   if (event.key === "Escape") {
     closePopup(document.querySelector(".popup_opened"));
+  }
 }
 
 function addElementListener(element, button) {
