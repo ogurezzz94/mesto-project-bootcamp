@@ -1,17 +1,34 @@
-export function closeElement(element) {
+export function closePopup(element) {
   element.classList.remove("popup_opened");
+  clreaCloseWatcher(element);
 }
 
-function closeElementHandler(element, button) {
-  button ? button : (button = element);
-  button.addEventListener("click", (event) => {
-    event.stopPropagation();
-    closeElement(element);
-    button.removeEventListener("click", (event) => {
-      event.stopPropagation();
-      closeElement(element);
-    });
-  });
+function clreaCloseWatcher(popup) {
+  const btn = popup.querySelector(".popup__close-button");
+  document.body.removeEventListener("keyup", popupCloseEscListener);
+  popup.removeEventListener("click", popupCloseBtnListener);
+  btn.removeEventListener("click", popupCloseBtnListener);
+}
+
+
+function popupCloseBtnListener(event) {
+  event.stopPropagation();
+  closePopup(document.querySelector(".popup_opened"));
+}
+
+function popupCloseEscListener(event) {
+  if (event.key === "Escape") {
+    closePopup(document.querySelector(".popup_opened"));
+}
+
+function addElementListener(element, button) {
+  if (!button) button = element;
+  button.addEventListener("click", popupCloseBtnListener);
+  document.body.addEventListener("keyup", popupCloseEscListener);
+  stopPropagation(element);
+}
+
+function stopPropagation(element) {
   Array.from(element.children).forEach((item) => {
     item.addEventListener("click", (event) => {
       event.stopPropagation();
@@ -19,30 +36,18 @@ function closeElementHandler(element, button) {
   });
 }
 
-function closeKeyHandler(element, key) {
-  document.body.addEventListener("keyup", (event) =>
-    closeOnKey(event, element, key)
-  );
-}
-function closeOnKey(event, element, key) {
-  if (event.key === key) {
-    closeElement(element);
-    document.body.removeEventListener("keyup", close);
-  }
-}
-
 export function openPopup(element) {
   element.classList.add("popup_opened");
   const closeButton = element.querySelector('[aria-label="Крестик"]');
-  closeKeyHandler(element, "Escape");
-  closeElementHandler(element);
-  closeElementHandler(element, closeButton);
+  addElementListener(element);
+  addElementListener(element, closeButton);
 }
 
-export function openFormWithReset(elements) {
-  elements.button.addEventListener("click", () => {
-    elements.form.reset();
-    openPopup(elements.popup);
+export function openFormWithReset(element) {
+  element.button.addEventListener("click", () => {
+    setInitialButtonState(element);
+    element.form.reset();
+    openPopup(element.popup);
   });
 }
 
@@ -52,4 +57,10 @@ export function openFormWithValues(element, profile) {
     element.form.name.value = profile.name.textContent;
     element.form.description.value = profile.description.textContent;
   });
+}
+
+function setInitialButtonState(element) {
+  const submitButton = element.form.querySelector("[type='submit']");
+  submitButton.disabled = true;
+  submitButton.classList.add("popup__submit-button_disabled");
 }
