@@ -6,7 +6,7 @@ import { createCard } from "./scripts/card";
 import { openPreview } from "./scripts/popup-open-preview";
 
 import {
-  closeElement,
+  closePopup,
   openFormWithReset,
   openFormWithValues,
 } from "./scripts/modal-open-close";
@@ -37,38 +37,41 @@ const imageAddElement = {
   popup: document.querySelector(".popup_action_add-image"),
   form: document.forms["add-image"],
 };
-// preview
-const popupPreview = document.querySelector(".popup_action_preview");
 // templates
-const popupAddImageForm = document.forms["add-image"];
 const templateCard = document.querySelector(".template-element").content;
 const templateSpace = document.querySelector(".elements");
-const templateObject = {};
 
 // Init load
-Promise.all([getUser(), getCards()]).then(([user, cards]) => {
-  renderUser(user, profileElement);
-  renderCards(cards, templateCard, templateSpace);
-});
+Promise.all([getUser(), getCards()])
+  .then(([user, cards]) => {
+    renderUser(user, profileElement);
+    renderCards(cards, templateCard, templateSpace);
+  })
+  .catch((err) =>
+    console.log("ошибка получения данных профиля и карточек с сервра", err)
+  );
 
-function addImage(form, object, template, space, modal) {
+function addImage(form, template, space) {
   form.addEventListener("submit", (element) => {
-    object["name"] = form.title.value;
-    object["link"] = form.link.value;
-    postCard(object).then((card) => addCard(card, template, space, modal));
-    closeElement(form.offsetParent);
-    element.preventDefault();
-    form.reset();
+    const obj = {
+      name: form.title.value,
+      link: form.link.value,
+    };
+    postCard(obj)
+      .then(
+        (card) => addCard(card, template, space),
+        closePopup(form.offsetParent),
+        element.preventDefault(),
+        form.reset()
+      )
+      .catch((err) => console.log("ошибка загрузки карточки на сервер", err));
   });
 }
 
-function addCard(data, template, space, modal) {
-  const card = createCard({
-    data,
-    template
-  });
-  openPreview(card.querySelector(".element__image"), modal);
+function addCard(data, template, space) {
+  const card = createCard({ data, template });
 
+  openPreview(card);
   space.prepend(card);
 }
 // open modals
@@ -78,14 +81,7 @@ openFormWithValues(profileEditElement, profileElement);
 
 editProfile(profileEditElement.form, profileElement);
 editAvatar(avatarEditElement, profileElement);
-// submit for add
-addImage(
-  popupAddImageForm,
-  templateObject,
-  templateCard,
-  templateSpace,
-  popupPreview
-);
+addImage(imageAddElement.form, templateCard, templateSpace);
 
 enableValidation({
   formSelector: ".popup__container", // form

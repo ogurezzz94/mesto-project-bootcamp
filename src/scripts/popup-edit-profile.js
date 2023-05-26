@@ -1,4 +1,4 @@
-import { closeElement } from "./modal-open-close";
+import { closePopup } from "./modal-open-close";
 import { patchProfile } from "./api";
 
 export function editProfile(form, profile) {
@@ -6,12 +6,14 @@ export function editProfile(form, profile) {
     const name = form.name.value;
     const description = form.description.value;
 
-    profile.name.textContent = name;
-    profile.description.textContent = description;
-
-    patchProfile({ name, description });
-    closeElement(form.offsetParent);
+    patchProfile({ name, description })
+      .then((res) => {
+        profile.name.textContent = res.name;
+        profile.description.textContent = res.about;
+        closePopup(form.offsetParent);
+        form.reset();
+      })
+      .catch((err) => console.log("ошибка загрузки био на сервер", err));
     event.preventDefault();
-    form.reset();
   });
 }
