@@ -70,8 +70,6 @@ function addImage(form, template, space) {
 
 function addCard(data, template, space) {
   const card = createCard({ data, template });
-
-  openPreview(card);
   space.prepend(card);
 }
 // open modals
