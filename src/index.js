@@ -3,7 +3,7 @@ import "./pages/index.css";
 import { getCards, getUser, postCard } from "./scripts/api";
 import { renderUser, renderCards } from "./scripts/render";
 import { createCard } from "./scripts/card";
-import { openPreview } from "./scripts/popup-open-preview";
+import { loader } from "./scripts/utils";
 
 import {
   closePopup,
@@ -57,14 +57,19 @@ function addImage(form, template, space) {
       name: form.title.value,
       link: form.link.value,
     };
+    loader(form, "Сохранение...");
     postCard(obj)
-      .then(
-        (card) => addCard(card, template, space),
-        closePopup(form.offsetParent),
-        element.preventDefault(),
-        form.reset()
-      )
-      .catch((err) => console.log("ошибка загрузки карточки на сервер", err));
+      .then((card) => {
+        addCard(card, template, space);
+        closePopup(form.offsetParent);
+        loader(form, "Сохранить");
+        form.reset();
+      })
+      .catch((err) => {
+        console.log("ошибка загрузки карточки на сервер", err);
+        loader(form, "Сохранить");
+      });
+    element.preventDefault();
   });
 }
 
